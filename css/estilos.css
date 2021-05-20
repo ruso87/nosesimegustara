@@ -1,0 +1,658 @@
+@import url("https://fonts.googleapis.com/css2?family=Arvo:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body, .font-regular {
+  font-family: "Arvo", sans-serif;
+  font-weight: 400;
+}
+
+.font-thin {
+  font-family: "Arvo", sans-serif;
+  font-weight: 100;
+}
+
+.font-regular {
+  font-family: "Arvo", sans-serif;
+  font-weight: 400;
+}
+
+.font-bold {
+  font-family: "Arvo", sans-serif;
+  font-weight: 700;
+}
+
+strong {
+  font-weight: 700;
+}
+
+.font-italic, em {
+  font-style: italic;
+}
+
+.centrado {
+  text-align: center;
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1;
+  color: #fff;
+  margin-bottom: 2.5rem;
+  text-align: center;
+}
+
+h2 {
+  font-weight: 400;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #ffa500;
+}
+
+h3 {
+  color: #1f033a;
+  font-weight: 700;
+  font-size: 2rem;
+  margin-bottom: 2.5rem;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+h4 {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+p {
+  font-size: 1rem;
+}
+
+a, img, header, #menuPrincipal {
+  -webkit-transition: all 250ms ease-in-out;
+  -moz-transition: all 250ms ease-in-out;
+  -o-transition: all 250ms ease-in-out;
+  transition: all 250ms ease-in-out;
+}
+
+a {
+  text-decoration: none;
+  color: #ffa500;
+}
+
+a:hover {
+  text-decoration: none;
+  color: #ffef00;
+}
+
+a:focus {
+  box-shadow: none !important;
+}
+
+.columnaOchenta {
+  width: 80%;
+  margin: auto;
+  max-width: 1600px;
+}
+
+.columnas {
+  display: inline-block;
+  width: 100%;
+  margin-bottom: 2.5rem;
+}
+
+.dosColumnas {
+  text-align: center;
+}
+
+.dosColumnas img {
+  margin-bottom: 1rem;
+}
+
+.sectionMain {
+  display: inline-block;
+  width: 100%;
+  padding-top: 30px;
+}
+
+.seccion {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+.backDark {
+  background: #22073d;
+  background: linear-gradient(180deg, #1f033a 10%, #432b59 100%);
+  color: #fff;
+}
+
+.backDark h3 {
+  color: #ffa500;
+}
+
+.btn {
+  display: inline-block;
+  background: #ffa500;
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 20px;
+  border: 1px solid #ffa500;
+}
+
+.btn:hover {
+  color: #ffa500;
+  background: none;
+  box-shadow: none !important;
+}
+
+img {
+  max-width: 100%;
+}
+
+/*HEADER*/
+header {
+/*   position: fixed; */
+  width: 100%;
+  height: 105px;
+  z-index: 999;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 700;
+  padding-left: 10%;
+  background: #1f033a;
+  padding: 0 !important;
+}
+
+#logo {
+  position: absolute;
+  left: calc(50% - 75px);
+  width: 150px;
+  text-align: center;
+  top: 0;
+  background: rgba(236, 214, 255, 0);
+}
+
+#logo:hover {
+  background: linear-gradient(180deg, rgba(228, 221, 61, 0.2) 0%, rgba(0, 0, 0, 0) 70%);
+}
+
+#abrirMenu {
+  color: #fff;
+}
+
+#abrirMenu .fas {
+  padding-left: 8px;
+}
+
+#menuPrincipal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  height: 100vh;
+  width: 100vw;
+  padding: 0;
+  background: #22073d;
+  background: linear-gradient(180deg, #1f033a 10%, #432b59 100%);
+  text-align: center;
+  transform: translateY(-100vh);
+}
+
+#menuPrincipal.visible {
+  transform: translateY(0);
+}
+
+#menuPrincipal li {
+  list-style: none;
+  text-transform: uppercase;
+  padding: 15px;
+}
+
+#menuPrincipal li a, #menuPrincipal li a:visited {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+#menuPrincipal li a:hover, #menuPrincipal li a:active {
+  color: #ffef00;
+}
+
+#menuPrincipal li i {
+  display: block;
+}
+
+#menuPrincipal li.menuHome {
+  padding-top: 30px;
+}
+
+#menuPrincipal li.menuClose {
+  color: #afafaf;
+  font-weight: 100;
+  border-bottom: 1px solid #afafaf;
+}
+
+.redesList {
+  align-self: flex-start;
+  margin-top: 40vh;
+  display: flex;
+  flex-flow: column;
+  background: #230734;
+  background: linear-gradient(to left, #230734 -162%, rgba(35, 7, 52, 0) 50%);
+}
+
+.redesList li {
+  list-style: none;
+  padding: 2px 5px;
+}
+
+.redesList li img {
+  height: 25px;
+}
+
+.redesList li a {
+  width: 35px;
+  height: 35px;
+  background: rgba(31, 3, 58, 0.3);
+  text-decoration: none;
+  text-align: center;
+  line-height: 35px;
+  font-size: 17px;
+  display: block;
+  border-radius: 50%;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #fff;
+}
+
+.redesList li a i {
+  position: relative;
+  color: #fff;
+  transition: 0.5s;
+  z-index: 3;
+}
+
+.redesList li a:before {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(31, 3, 58, 0.8);
+  transition: 0.5s;
+}
+
+.redesList li a:hover:before {
+  top: 0;
+}
+
+.redesList li a:hover .fa-spotify {
+  transform: rotateY(360deg);
+  color: #1ed761;
+}
+
+.redesList li a:hover .fa-podcast {
+  transform: rotateY(360deg);
+  color: #d56dfb;
+}
+
+.redesList li a:hover .fa-google {
+  transform: rotateY(360deg);
+  color: #db4437;
+}
+
+.redesList li a:hover .fa-instagram {
+  transform: rotateY(360deg);
+  color: #e1306c;
+}
+
+/*FOOTER*/
+footer {
+  display: flex;
+  flex-flow: column wrap;
+  /* width: 100%; */
+  padding: 20px 45px;
+  background: #1f033a;
+  color: #fff;
+}
+
+footer div {
+  float: left;
+  width: 100%;
+}
+
+footer .footerPlay iframe {
+  height: 110px;
+}
+
+footer .footerInfo p {
+  margin-bottom: 15px;
+}
+
+footer .footerInfo .redesList {
+  display: none;
+}
+
+/*INDEX*/
+.indexMain {
+  padding-top: 0;
+}
+
+.indexMain h1 {
+  font-size: 2em;
+  background: #22073d;
+  padding: .5em;
+  margin-bottom: 0;
+  box-shadow: 0px 20px 20px 0 #fffedf;
+}
+
+.carousel-item-next, .carousel-item-prev, .carousel-item.active {
+  display: flex;
+}
+
+.carousel-item {
+  height: calc(100vh - 4em);
+  min-height: 500px;
+  padding-top: 140px;
+  background-size: cover;
+  background-position: center;
+  align-items: center;
+  background-color: #22073d;
+}
+
+.carousel-item.primer-slide {
+  background-image: url(../media/backgrounds/back-fightclub-768.jpg);
+}
+
+.carousel-item.segundo-slide {
+  background-image: url(../media/backgrounds/back-totoro-768.jpg);
+}
+
+.carousel-control-next, .carousel-control-prev {
+  top: 50px;
+  display: none;
+}
+
+.carousel-indicators li {
+  background-color: #ffef00;
+  width: 14px;
+}
+
+.contenidoEstreno {
+  text-align: center;
+  max-width: 80%;
+}
+
+.imgEstreno {
+  display: none;
+}
+
+.imgEstreno img {
+  width: 100%;
+  box-shadow: 0 0 5px 0 rgba(228, 221, 61, 0.2);
+}
+
+.txtEstreno p {
+  color: #fff;
+  font-weight: 400;
+  margin-bottom: 30px;
+}
+
+.indexIntegrantes h4 {
+  font-size: 2.5rem;
+  line-height: 1;
+  font-weight: 400;
+}
+
+.indexIntegrantes p {
+  font-size: 1.1rem;
+  font-weight: 400;
+  margin-bottom: 1.5rem;
+}
+
+.grilla {
+  display: grid;
+  grid-template-columns: 1fr;
+  margin-bottom: 2rem;
+}
+
+.grilla a {
+  display: inline-block;
+  padding: 1rem;
+}
+
+.grilla a:hover {
+  color: #22073d;
+}
+
+.grilla a img {
+  margin-bottom: 10px;
+}
+
+.grilla a:hover img {
+  transform: scale(1.025);
+  box-shadow: 0 0 5px 0 rgba(125, 125, 125, 0.6);
+}
+
+.grilla a h4 {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.backDark .grilla a:hover {
+  color: #ffef00;
+}
+
+/*INTERNAS - INTEGRANTES*/
+.mainIntegrantes .dosColumnas {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.mainIntegrantes .dosColumnas img {
+  width: 100%;
+  max-width: 300px;
+}
+
+/*INTERNAS - NOVEDADES*/
+.mainNovedades img {
+  width: 380px;
+  max-width: 100%;
+}
+
+/*INTERNAS - CONTACTO*/
+.columna-texto .columna-texto__parrafo {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.columna-texto .columna-texto__parrafo--italic {
+  font-style: italic;
+}
+
+.columna-form .form-group__label {
+  font-size: 1rem;
+}
+
+.columna-form .form-group__parrafo {
+  font-size: 1rem;
+}
+
+.formulario {
+  padding: 20px 30px;
+  text-align: left;
+}
+
+.formulario textarea {
+  resize: none !important;
+}
+
+.formulario .btnSubmit {
+  font-family: "Arvo", sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  background: #ffa500;
+  color: #fff;
+  padding: 10px 20px;
+  border: 1px solid #ffa500;
+}
+
+.formulario .btnSubmit:hover, .formulario .btnSubmit:active, .formulario .btnSubmit:focus {
+  color: #ffa500 !important;
+  background: none !important;
+  border: 1px solid #ffa500 !important;
+  box-shadow: none !important;
+}
+
+/*MEDIA QUERIES - TABLET*/
+@media all and (min-width: 600px) {
+  header {
+    padding: 0 45px;
+  }
+  .redesList {
+    flex-direction: row;
+    background: none;
+    align-self: center;
+    margin: 0;
+  }
+  .redesList li {
+    padding: 0;
+    margin-left: 10px;
+  }
+  footer .footerInfo .redesList {
+    display: flex;
+    justify-content: center;
+    padding: 0;
+  }
+  footer .footerInfo .redesList li {
+    margin-right: 10px;
+    margin-left: 0;
+  }
+  .grilla {
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 1rem;
+    grid-row-gap: 2rem;
+  }
+}
+
+@media all and (min-width: 768px) {
+  .dosColumnas {
+    display: flex;
+    text-align: left;
+    align-items: center;
+  }
+  .dosColumnas .primerCol {
+    min-width: 365px;
+  }
+  .dosColumnas .primerCol img {
+    max-width: 365px;
+  }
+  .dosColumnas .segundaCol {
+    padding-left: 45px;
+  }
+  h1 {
+    font-size: 3rem;
+    text-align: left;
+  }
+  h3 {
+    font-size: 2.5rem;
+  }
+  footer .footerPlay iframe {
+    height: 100px;
+  }
+  footer .footerInfo {
+    padding: 15px;
+    text-align: center;
+  }
+  .carousel-item {
+    height: calc(100vh - 5em);
+    padding-top: 100px;
+  }
+  .carousel-item.primer-slide {
+    background-image: url(../media/backgrounds/back-fightclub-1024.jpg);
+  }
+  .carousel-item.segundo-slide {
+    background-image: url(../media/backgrounds/back-totoro-1024.jpg);
+  }
+  .carousel-control-next, .carousel-control-prev {
+    display: flex;
+  }
+  .indexMain h1 {
+    font-size: 2.5em;
+  }
+  .contenidoEstreno {
+    display: flex;
+    align-items: center;
+    text-align: left;
+  }
+  .imgEstreno {
+    display: block;
+    width: 37%;
+    margin-right: 2rem;
+  }
+  .txtEstreno {
+    float: left;
+    width: 60%;
+  }
+  .grilla {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  .mainIntegrantes .dosColumnas {
+    flex-wrap: nowrap;
+  }
+  .mainIntegrantes .dosColumnas:nth-child(odd) {
+    flex-direction: row-reverse;
+  }
+  .mainIntegrantes .dosColumnas:nth-child(odd) .segundaCol {
+    flex-grow: 1;
+    padding: 0 45px 0 0;
+  }
+  .mainIntegrantes .dosColumnas:nth-child(even) .segundaCol {
+    padding-left: 45px;
+  }
+}
+
+/*MEDIA QUERIES - REPRODUCTOR FOOTER*/
+@media all and (min-width: 859px) {
+  footer .footerPlay iframe {
+    height: 161px;
+  }
+}
+
+/*MEDIA QUERIES - DESKTOP*/
+@media all and (min-width: 1200px) {
+  #menuPrincipal {
+    display: block;
+    position: relative;
+    transform: translateY(0);
+    height: auto;
+    width: auto;
+    margin: 0;
+    background: none;
+  }
+  #menuPrincipal li {
+    display: inline-block;
+    margin-right: 10px;
+    padding: 0;
+    text-align: left;
+  }
+  #abrirMenu, #menuPrincipal li.menuHome, #menuPrincipal li.menuClose {
+    display: none;
+  }
+  .seccion {
+    padding-top: 3.5rem;
+    padding-bottom: 3.5rem;
+  }
+  .carousel-item.primer-slide {
+    background-image: url(../media/backgrounds/back-fightclub-1920.jpg);
+  }
+  .carousel-item.segundo-slide {
+    background-image: url(../media/backgrounds/back-totoro-1920.jpg);
+  }
+}
