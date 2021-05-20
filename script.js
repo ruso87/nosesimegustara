@@ -7,13 +7,10 @@ function empezar() {
     // FUNCIONES
     // comprobación de si al usuario le gusta el género de la Película
     function comparacionGenero(genero, datoUser) {
-        let generoUser = false;
+        var resultadoGenero = nombre + ", probablemente no te guste esta peli, ya que es una película de " + genero;
         if (datoUser == "Si" || datoUser == "SI" || datoUser == "si"){
-            generoUser = true;
+            resultadoGenero = nombre + ", venimos bien! Esta es una película de " + genero ;
         }
-        if (datoUser === false) {
-            var resultadoGenero = nombre + ", probablemente no te guste esta peli, ya que es una película de " + genero;
-        } else { resultadoGenero = nombre + ", venimos bien! Esta es una película de " + genero }
         console.log(resultadoGenero);
     }
 
@@ -42,7 +39,7 @@ function empezar() {
     }
 
     // SE INTRODUCEN LOS DATOS DE LA PELÍCULA  ("CALP" son las iniciales de "Cine a las Piñas")
-    var generoPeli = "accion"
+    var generoPeli = "acción"
     var musicaCALP = 5;
     var fotoCALP = 5;
     var tramaCALP = 5;
