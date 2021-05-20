@@ -1,9 +1,23 @@
 function empezar() {
-    let nombre = prompt("Para empezar, por favor ingresá tu nombre:");
+
+    // PEDIMOS NOMBRE PARA PODER COMUNICARNOS CON EL USUARIO
+    const nombre = prompt("Para empezar, por favor ingresá tu nombre:");
     alert("Buenas buenas " + nombre + ", emprecemos!");
 
-    //CALP son las iniciales de "Cine a las Piñas"
+    // FUNCIONES
+    // comprobación de si al usuario le gusta el género de la Película
+    function comparacionGenero(genero, datoUser) {
+        let generoUser = false;
+        if (datoUser == "Si" || datoUser == "SI" || datoUser == "si"){
+            generoUser = true;
+        }
+        if (datoUser === false) {
+            var resultadoGenero = nombre + ", probablemente no te guste esta peli, ya que es una película de " + genero;
+        } else { resultadoGenero = nombre + ", venimos bien! Esta es una película de " + genero }
+        console.log(resultadoGenero);
+    }
 
+    //  ¡calculo de diferencia de puntuación según categoría
     function diferenciaEnCategoria(categoria, datoCALP, datoUser) {
         let resultado = datoCALP - datoUser;
         if (resultado < 0){
@@ -13,40 +27,44 @@ function empezar() {
         return resultado;
     }
 
+    // calculo de diferencia total
+    function calcularDiferencia() {
+        var diferenciaTotal = diferenciaMusica + diferenciaFoto + diferenciaTrama + diferenciaFx
+        console.log("La diferencia total es de: " + diferenciaTotal)
+        return diferenciaTotal
+    }
 
+    // calculo de la probabilidad de que le guste la película según la diferencia
+    function probabilidad(diferencia) {
+        var porcentajeDiferencia = diferencia * 100 / 20;
+        var probabilidadOk = 100 - porcentajeDiferencia;
+        console.log(nombre + ", la probabilidad de que la película te guste es de: " + probabilidadOk + "%")
+    }
 
-    var humorCALP = 2;
-    var emocionCALP = 0;
-    var accionCALP = 3;
+    // SE INTRODUCEN LOS DATOS DE LA PELÍCULA  ("CALP" son las iniciales de "Cine a las Piñas")
+    var generoPeli = "accion"
     var musicaCALP = 5;
-    var fotoCALP = 4;
+    var fotoCALP = 5;
     var tramaCALP = 5;
-    var fxCALP = 1;
+    var fxCALP = 5;
 
-    var humorUser = parseInt(prompt("Del 0 al 5:\n¿Cuanto te gustan las pelis de Humor?"));
-    var emocionUser = parseInt(prompt("Del 0 al 5:\n¿Cuanto te gustan las pelis Emotivas?"));
-    var accionUser = parseInt(prompt("Del 0 al 5:\n¿Cuanto te gustan las pelis de Acción?"));
-    var musicaUser = parseInt(prompt("Del 0 al 5:\n¿Cuanto te interesa la Música de una película?"));
-    var fotoUser = parseInt(prompt("Del 0 al 5:\n¿Cuanto te interesa la Fotografía de una película?"));
-    var tramaUser =parseInt(prompt("Del 0 al 5:\n¿Cuanto te interesa la Trama de una película?"));
-    var fxUser = parseInt(prompt("Del 0 al 5:\n¿Cuanto te interesan los Efectos Especiales de una película?"));
+    // SE PIDEN LOS CRITERIOS DEL USUARIO
+    var generoUser = prompt("¿Te gustan las pelis de " + generoPeli + "?\n(Escribí Si o No por favor)");
+    var musicaUser = parseInt(prompt("Para vos: ¿Cuán importante es la Música de una película?\nDel 0 al 5 por favor."));
+    var fotoUser = parseInt(prompt("¿Cuán importante es la Fotografía de una película?\nDel 0 al 5 por favor."));
+    var tramaUser =parseInt(prompt("¿Cuán importante es la Trama de una película?\nDel 0 al 5 por favor."));
+    var fxUser = parseInt(prompt("¿Cuán importante son los Efectos Especiales de una película?\nDel 0 al 5 por favor."));
 
-    diferenciaHumor = diferenciaEnCategoria("humor", humorCALP, humorUser)
-    diferenciaEmocion = diferenciaEnCategoria("emocion", emocionCALP, emocionUser)
-    diferenciaAccion = diferenciaEnCategoria("accion", accionCALP, accionUser)
+    // SE EJECUTAN LAS FUNCIONES
+
+    diferenciaGenero = comparacionGenero(generoPeli, generoUser)
     diferenciaMusica = diferenciaEnCategoria("musica", musicaCALP, musicaUser)
     diferenciaFoto = diferenciaEnCategoria("fotografia", fotoCALP, fotoUser)
     diferenciaTrama = diferenciaEnCategoria("trama", tramaCALP, tramaUser)
     diferenciaFx = diferenciaEnCategoria("fx", fxCALP, fxUser)
-
-    var diferenciaTotal = diferenciaHumor + diferenciaEmocion + diferenciaAccion + diferenciaMusica + diferenciaFoto + diferenciaTrama + diferenciaFx
-
-    console.log("La diferencia total es de: " + diferenciaTotal)
-
-    var porcentaje = (diferenciaTotal) => {
-        diferenciaTotal * 100 / 30;
-    }
-    console.log("La porcentaje de diferencia es de: " + porcentaje + "% ")
+    
+    let diferencia = calcularDiferencia();
+    probabilidad(diferencia);
 
 
 }

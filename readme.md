@@ -5,18 +5,19 @@ Este calculador busca ayudar al usuario a saber si una película le gustará o n
 ## Sobre el Podcast
 
 El Podcast _"Cine a las Piñas"_, es un programa que trata de cine, humor y análisis entre amigos. Sobre todas las cosas busca entretener al oyente y hacerlo sentir parte de una mesa de amigos que hablan descontracturadamente y sin tapujos sobre películas que nos rodean y nos rodearon desde siempre.
-
+Este calculador formará parte del sitio desarrollado para [Cine a las Piñas](https://ruso87.github.io/proyecto-coder/)
 
 ### Como funciona
 
 **Sistema**
 
-Antes de empezar la gente de _"Cine a las Piñas"_ marca a qué género pertenece cada película:
+Antes de empezar, la gente de _"Cine a las Piñas"_ marca a qué género pertenece cada película:
 * Comedia
-* Emotiva
+* Drama
 * Accion
+* Etc
 
-Luego se evalúa la importancia de diferentes elementos de la película y se les otorga una puntuación de 0 a 5 a cada uno de estos:
+Luego se evalúa la importancia de diferentes componentes de la película y se les otorga una puntuación de 0 a 5 a cada uno de estos:
 * Música
 * Fotografía
 * Trama
@@ -24,11 +25,11 @@ Luego se evalúa la importancia de diferentes elementos de la película y se les
 
 **Usuario**
 
-A continuación se le pide al usuario que diga si le gustan los 3 Generos de película (por separado):
-* Si el gusto del usuario no coincide con el género de la película, se le avisará que esa película es de determinado género y que probablemente no vaya a gustarle
+A continuación se le pide al usuario que diga si le gustan las películas del género al que pertenece la película.
+* Si el gusto del usuario no coincide con el género de la película, se le avisará que esa película es de determinado género y que probablemente no vaya a gustarle.
 * Si el gusto coincide se le avisará que la peli concide con sus gustos!
 
-Luego se le pide al usuario que valore la importancia que le da a cada uno de los elementos antes evaluados por _Cine a las Piñas_ y se calcula la diferencia entre ambos puntajes en cada categoría y eso nos dirá cuanto coincide el gusto del Usuario con la película.
+Luego se le pide al usuario que valore la importancia que le da a cada uno de los componentes antes evaluados por _Cine a las Piñas_ y se calcula la diferencia entre ambos puntajes en cada categoría. Eso nos dirá cuanto coincide el gusto del Usuario con la película.
 
 **Ejemplo**
 
@@ -42,7 +43,7 @@ Luego se le pide al usuario que valore la importancia que le da a cada uno de lo
 La diferencia máxima será de "20" ("5" por cada Elemento evaluado).
 Por lo tanto en este ejemplo hay una diferencia del 40% (8 de 20) y por ende una coincidencia del 60%.
 
-El usuario será notificado de dicho nivel de coincidencia.
+El usuario será notificado de dicho nivel de coincidencia como "Probabilidad de que le guste la película".
 
 
 ### Lenguajes utilizados
@@ -55,6 +56,7 @@ El usuario será notificado de dicho nivel de coincidencia.
 
 * **Alumno:** _Andrés Hernández_
 * **Profesor:** _Laura Gonzalez Martin_
+* **Tutora:** _María Florencia Martinez_
 * **Curso:** _Javascript_
 * **Camada:** _16760_
 
