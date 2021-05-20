@@ -2,7 +2,7 @@ function empezar() {
 
     // PEDIMOS NOMBRE PARA PODER COMUNICARNOS CON EL USUARIO
     const nombre = prompt("Para empezar, por favor ingresá tu nombre:");
-    alert("Buenas buenas " + nombre + ", emprecemos!");
+    alert("Buenas buenas " + nombre + ", empecemos!");
 
     // FUNCIONES
     // comprobación de si al usuario le gusta el género de la Película
