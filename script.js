@@ -101,8 +101,8 @@ function empezar(episodio) {
     // calculo de diferencia de puntuación según categoría
     function diferenciaEnCategoria(categoria, valorPeli, valorUser) {
         let resultado = valorPeli - valorUser;
-        if (resultado < 0){
-            resultado = resultado * -1;
+        if (valorUser > valorPeli){
+            resultado = valorUser - valorPeli;
         }
         console.log("La diferencia de " + categoria + " es de : " + resultado + " punto/s.");
         return resultado;
