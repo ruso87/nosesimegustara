@@ -15,7 +15,7 @@ class Pelicula {
 }
 
 // Estos datos estarán cargados en la paltaforma de antemano y son diferentes dependiendo de cada película
-const datosEp1 = new Pelicula ("El CLub de la Pelea", "suspenso y muertos", 0, 2, 5, 1);
+const datosEp1 = new Pelicula ("Sexto Sentido", "suspenso y muertos", 0, 2, 5, 1);
 const datosEp2 = new Pelicula ("La dama y el Vagabundo", "animacion", 2, 4, 0, 5);
 const datosEp3 = new Pelicula ("El Aura", "suspenso", 5, 3, 5, 0);
 const datosEp4 = new Pelicula ("La Trilogía Matrix", "ciencia ficción", 1, 2, 5, 5);
