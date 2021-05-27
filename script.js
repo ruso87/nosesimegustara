@@ -15,13 +15,12 @@ class Pelicula {
 }
 
 // Estos datos estarán cargados en la paltaforma de antemano y son diferentes dependiendo de cada película
-const datosEp1 = new Pelicula ("El CLub de la Pelea", "suspenso y muertos", 0, 2, 5, 1)
-const datosEp2 = new Pelicula ("La dama y el Vagabundo", "animacion", 2, 4, 0, 5)
-const datosEp3 = new Pelicula ("El Aura", "suspenso", 5, 3, 5, 0)
-const datosEp4 = new Pelicula ("La Trilogía Matrix", "ciencia ficción", 1, 2, 5, 5)
-const datosEp5 = new Pelicula ("Mi vecino Totoro", "animación japonesa", 3, 3, 5, 0)
-const datosEp6 = new Pelicula ("El CLub de la Pelea", "accion", 3, 4, 5, 2)
-
+const datosEp1 = new Pelicula ("El CLub de la Pelea", "suspenso y muertos", 0, 2, 5, 1);
+const datosEp2 = new Pelicula ("La dama y el Vagabundo", "animacion", 2, 4, 0, 5);
+const datosEp3 = new Pelicula ("El Aura", "suspenso", 5, 3, 5, 0);
+const datosEp4 = new Pelicula ("La Trilogía Matrix", "ciencia ficción", 1, 2, 5, 5);
+const datosEp5 = new Pelicula ("Mi vecino Totoro", "animación japonesa", 3, 3, 5, 0);
+const datosEp6 = new Pelicula ("El CLub de la Pelea", "accion", 3, 4, 5, 2);
 
 // ARMO ARRAY DE PELÍCULAS
 const peliculasTodas = [datosEp1, datosEp2, datosEp3, datosEp4, datosEp5, datosEp6];
@@ -31,6 +30,24 @@ function verTodas() {
     for (pelis of peliculasTodas) {
         pelis.datosPeli();
     }
+}
+
+// FUNCIÓNES PARA ORDENAR LAS PELICULAS POR SUS CARACTERÍSTICAS
+function ordenarPorMusica() {
+    const ordenMusica = peliculasTodas.sort((a, b) => b.musica - a.musica);
+    console.log ("El orden de las películas listadas, según la importancia de su Música es: " + ordenMusica.map(el => el.nombre).join(", "));
+}
+function ordenarPorFoto() {
+    const ordenFoto = peliculasTodas.sort((a, b) => b.foto - a.foto);
+    console.log ("El orden de las películas listadas, según la importancia de su Fotografía es: " + ordenFoto.map(el => el.nombre).join(", "));
+}
+function ordenarPorTrama() {
+    const ordenTrama = peliculasTodas.sort((a, b) => b.trama - a.trama);
+    console.log ("El orden de las películas listadas, según la importancia de su Trama es: " + ordenTrama.map(el => el.nombre).join(", "));
+}
+function ordenarPorFx() {
+    const ordenFx = peliculasTodas.sort((a, b) => b.fx - a.fx);
+    console.log ("El orden de las películas listadas, según la importancia de sus Efectos Especiales es: " + ordenFx.map(el => el.nombre).join(", "));
 }
 
 function empezar(episodio) {
