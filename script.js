@@ -72,6 +72,9 @@ function empezar(episodio) {
         case "ep6":
             var peli = datosEp6;
             break;
+        default:
+            console.log("Oh oh... algo salió mal. Por favor elegí otra película");
+            break;
     }
     
     // OBJETO: crear User

@@ -25,11 +25,16 @@ Luego se evalúa la importancia de diferentes componentes de la película y se l
 
 **Usuario**
 
-A continuación se le pide al usuario que diga si le gustan las películas del género al que pertenece la película.
-* Si el gusto del usuario no coincide con el género de la película, se le avisará que esa película es de determinado género y que probablemente no vaya a gustarle.
-* Si el gusto coincide se le avisará que la peli concide con sus gustos!
+El usuario puede elegir diferentes opciones:
+1. Elegir una película para ver si le gusta.
+2. Ver las evaluaciones de todas las películas.
+3. Ver un listado de las películas ofrecidas, ordenadas por un criterio de su elección.
 
-Luego se le pide al usuario que valore la importancia que le da a cada uno de los componentes antes evaluados por _Cine a las Piñas_ y se calcula la diferencia entre ambos puntajes en cada categoría. Eso nos dirá cuanto coincide el gusto del Usuario con la película.
+Si el usuario quiere ver si una película le gustará, el primer lugar, se le pide que diga si le gustan las películas del género al que pertenece la película.
+* Si el gusto del usuario no coincide con el género de la película, se le avisará que esa película es de determinado género y que probablemente no vaya a gustarle.
+* Si el gusto coincide se le avisará que la peli concide con sus gustos.
+
+Luego se le pide al usuario que valore la importancia que le da a cada uno de los componentes, antes evaluados por _Cine a las Piñas_, y se calcula la diferencia entre ambos puntajes en cada categoría. Eso nos dirá cuanto coincide el gusto del Usuario con la película.
 
 **Ejemplo**
 
