@@ -146,6 +146,7 @@ a:focus {
 
 .btn:hover {
   color: #ffa500;
+  border-color: #ffa500;
   background: none;
   box-shadow: none !important;
 }
@@ -468,54 +469,34 @@ footer .footerInfo .redesList {
   max-width: 100%;
 }
 
-/*INTERNAS - CONTACTO*/
-.columna-texto .columna-texto__parrafo {
-  font-size: 1rem;
-  margin-bottom: 1rem;
-}
-
-.columna-texto .columna-texto__parrafo--italic {
-  font-style: italic;
-}
-
-.columna-form .form-group__label {
-  font-size: 1rem;
-}
-
-.columna-form .form-group__parrafo {
-  font-size: 1rem;
-}
-
-.formulario {
-  padding: 20px 30px;
-  text-align: left;
-}
-
-.formulario textarea {
-  resize: none !important;
-}
-
-.formulario .btnSubmit {
-  font-family: "Arvo", sans-serif;
-  font-weight: 400;
-  font-size: 18px;
-  background: #ffa500;
-  color: #fff;
-  padding: 10px 20px;
-  border: 1px solid #ffa500;
-}
-
-.formulario .btnSubmit:hover, .formulario .btnSubmit:active, .formulario .btnSubmit:focus {
-  color: #ffa500 !important;
-  background: none !important;
-  border: 1px solid #ffa500 !important;
-  box-shadow: none !important;
-}
 
 /*MODAL*/
 .modal-header { border: 0;}
 .modal-footer { border: 0;}
 .custom-range { max-width: 300px;}
+
+.btn-primary.disabled, .btn-primary:disabled {   color: #ffa500 !important;
+  background: none !important;
+  border: 1px solid #ffa500 !important;
+  box-shadow: none !important;
+}
+
+.btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show>.btn-primary.dropdown-toggle {
+  color: #ffa500 !important;
+  background: none !important;
+  border: 1px solid #ffa500 !important;
+  box-shadow: none !important;
+}
+.btnCerrar {
+  color: #ffa500;
+  background: none;
+}
+.btnCerrar:hover {
+  background: #ffa500;
+  color: #fff;
+}
+
+
 
 /*LISTA*/
 #listaTodas {

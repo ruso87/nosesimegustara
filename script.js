@@ -53,7 +53,6 @@ for (const pelicula of peliculasTodas) {
     document.getElementById("grillaPelis").appendChild(linkPeli);
 }
 
-
 // FUNCIÓN PARA VER LOS DATOS DE TODAS LAS PELICULAS
 function verTodas() {
     var element = document.getElementById("listaTodas");
@@ -133,6 +132,12 @@ function empezar(episodio) {
     // CREO TITULO Y PREGUNTA EN EL FORMULARIO
     document.getElementById("titleForm").innerHTML = `Ok! Veamos si<br><strong>${peli.nombre}</strong><br>te gustará!`
     document.getElementById("preguntaGenero").innerHTML = `¿Te gustan las peliculas de <strong>${peli.genero}</strong>?`
+
+    // AGREGO UN EVENTO A LOS RADIOS PARA QUE SE HABILITE EL BOTON SUBMIT
+    function btnEnable(){ document.getElementById("submitBtn").disabled = false};
+    let radios = document.getElementsByName("radioGenero");
+    radios[0].onclick = () => { btnEnable() };
+    radios[1].onclick = () => { btnEnable() };
 
     const formUser = document.getElementById("formUser");
     formUser.addEventListener("submit", submitUser);
