@@ -1,46 +1,3 @@
-// OBJETOS: crear Películas
-class Pelicula {
-    constructor (id, imagen, nombre, genero, musica, foto, trama, fx) {
-        this.id = id,
-        this.imagen = imagen,
-        this.nombre = nombre,
-        this.genero = genero,
-        this.musica = musica,
-        this.foto = foto,
-        this.trama = trama,
-        this.fx = fx
-    }
-    datosPeli() {
-            let nomYGen = `La película \"${this.nombre}\" es una película de ${this.genero}.`;
-            let valorizaciones = `Valoración del equipo de Cine a las Piñas: Musica: ${this.musica}, Fotografía: ${this.foto}, Trama: ${this.trama}, Efectos especiales: ${this.fx}`;
-            console.log(nomYGen);
-            console.log(valorizaciones);
-            let listaTodas = document.getElementById("listaTodas");
-            let PeliListTit = document.createElement("h4");
-            PeliListTit.innerText = nomYGen;
-            let peliListGen = document.createElement("p");
-            peliListGen.innerText = valorizaciones;
-            listaTodas.appendChild(PeliListTit);
-            listaTodas.appendChild(peliListGen);
-    }
-}
-
-// Estos datos estarán cargados en la paltaforma de antemano y son diferentes dependiendo de cada película
-const datosEp1 = new Pelicula ("01", "media/programas/00-sexto-550.jpg", "Sexto Sentido", "suspenso y muertos", 0, 2, 5, 1);
-const datosEp2 = new Pelicula ("02", "media/programas/01-dama-y-vag-550.jpg", "La dama y el Vagabundo", "animacion", 2, 4, 0, 5);
-const datosEp3 = new Pelicula ("03", "media/programas/02-aura-550.jpg", "El Aura", "suspenso", 5, 3, 5, 0);
-const datosEp4 = new Pelicula ("04", "media/programas/03-matrix-550.jpg", "La Trilogía Matrix", "ciencia ficción", 1, 2, 5, 5);
-const datosEp5 = new Pelicula ("05", "media/programas/04-totoro-550.jpg", "Mi vecino Totoro", "animación japonesa", 3, 3, 5, 0);
-const datosEp6 = new Pelicula ("06", "media/programas/05-pelea-550.jpg", "El Club de la Pelea", "accion", 3, 4, 5, 2);
-
-// ARMO ARRAY DE PELÍCULAS
-const peliculasTodas = [];
-peliculasTodas.push(datosEp1);
-peliculasTodas.push(datosEp2);
-peliculasTodas.push(datosEp3);
-peliculasTodas.push(datosEp4);
-peliculasTodas.push(datosEp5);
-peliculasTodas.push(datosEp6);
 
 // IMPRIMO TODAS LAS PELICULAS EN EL HTML
 for (const pelicula of peliculasTodas) {
@@ -52,6 +9,10 @@ for (const pelicula of peliculasTodas) {
 				    	<a onclick="empezar('${pelicula.id}')" class="btn" data-toggle="modal" data-target="#modalPreguntas">¿ME GUSTARÁ?</i></a>`;
     document.getElementById("grillaPelis").appendChild(linkPeli);
 }
+
+// AGREGO EVENTO PARA VER TODAS LAS PELICULAS
+let verPelisList = document.getElementById("verTodas")
+verPelisList.onclick = () => { verTodas();};
 
 // FUNCIÓN PARA VER LOS DATOS DE TODAS LAS PELICULAS
 function verTodas() {
@@ -71,6 +32,7 @@ function verTodas() {
         }
     }
 }
+
 // FUNCIÓNES PARA ORDENAR LAS PELICULAS POR SUS CARACTERÍSTICAS
 function ordenarPorMusica() {
     const ordenMusica = peliculasTodas.sort((a, b) => b.musica - a.musica);
@@ -133,11 +95,22 @@ function empezar(episodio) {
     document.getElementById("titleForm").innerHTML = `Ok! Veamos si<br><strong>${peli.nombre}</strong><br>te gustará!`
     document.getElementById("preguntaGenero").innerHTML = `¿Te gustan las peliculas de <strong>${peli.genero}</strong>?`
 
-    // AGREGO UN EVENTO A LOS RADIOS PARA QUE SE HABILITE EL BOTON SUBMIT
-    function btnEnable(){ document.getElementById("submitBtn").disabled = false};
+    // VALIDO LOS CAMPOS CON EVENTOS PARA HABILITAR Y DESABILITAR EL SUBMIT con una función 
+    let inputNombre = document.getElementById("nombreUser");
+    inputNombre.onkeyup = () => { btnEnable();};
+    // AGREGO UN EVENTO A LOS RADIOS
     let radios = document.getElementsByName("radioGenero");
-    radios[0].onclick = () => { btnEnable() };
-    radios[1].onclick = () => { btnEnable() };
+    radios[0].onclick = () => { btnEnable();};
+    radios[1].onclick = () => { btnEnable();};
+    
+    // agrego un if para que se valide que el nombre no esté vacío y que algún radio esté clickeado
+    function btnEnable(){
+        if(inputNombre.value != "" && (radios[0].checked || radios[1].checked)){
+            document.getElementById("submitBtn").disabled = false;
+        }else{
+            document.getElementById("submitBtn").disabled = true;
+        }
+    };
 
     const formUser = document.getElementById("formUser");
     formUser.addEventListener("submit", submitUser);
@@ -156,12 +129,10 @@ function empezar(episodio) {
         const fxUser = document.getElementById("datoFx").value;
         const user1 = new User (nombre, generoUser, musicaUser, fotoUser, tramaUser, fxUser);
 
-
-        // SE ALMACENA PARA EN UN FUTURO NO TENER QUE PEDIR DE NUEVO LOS DATOS
+        // SE ALMACENAN LOS DATOS EN LOCAL STORAGE PARA 
         const userJSON = JSON.stringify(user1);
         localStorage.setItem('calpDatoUser', userJSON);
         
-
         // comprobación de si al usuario le gusta el género de la Película
         function comparacionGenero(nombrePeli, genero, respUser) {
             var resultadoGenero = `${nombre}, probablemente ${nombrePeli} no te guste <br> porque es de ${genero}.`;
@@ -215,9 +186,6 @@ function empezar(episodio) {
         // ME APOYO EN BOOTSTRAP PARA CERRAR UN MODAL y ABRIR EL OTRO
         $('#modalPreguntas').modal('toggle');
         $('#modalRespuesta').modal('show');
-
-        // HAGO QUE EL BOTÓN CERRAR LIMPIE EL DIV 
-
 
     }
 }

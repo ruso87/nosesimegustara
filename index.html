@@ -64,7 +64,7 @@
  -->			</div>
 			<div class="centrado" style="margin-bottom: 2rem; margin-top: 4rem;">
 				<h4 style="margin-bottom: 1rem;">¿Querés saber qué puntajes les dimos a todas las películas?</h4>
-				<a onclick="verTodas()" class="btn" style="cursor: pointer; width: 847px; max-width: 100%;">VER PUNTAJES DE TODAS LAS PELÍCULAS</a>
+				<a id="verTodas" class="btn" style="cursor: pointer; width: 847px; max-width: 100%;">VER PUNTAJES DE TODAS LAS PELÍCULAS</a>
 				<div id="listaTodas" class="centrado d-none"></div>
 			</div>
 			<div class="centrado" style="padding: 1rem; margin-bottom: 2rem;">
@@ -82,7 +82,29 @@
 			<p><strong>Cine a las Piñas:</strong> Un podcast de Cine, análisis, humor, y muuuy poca violencia a pesar del título.</p>
 		</div>
 	</footer>
-		
+
+	<!-- MODAL -->
+	<div class="modal fade" id="modalLocal" tabindex="-1" aria-labelledby="modalLocal" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="modalLocalCenteredScrollableTitle"></h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body centrado" >
+					<h2>Buenas buenaas..</h2>
+					<div id="preSaludo"></div>
+				</div>
+				<div class="modal-footer" style="justify-content: center;">
+					<button id="btnNoEs" class="btn centrado" data-dismiss="modal">Nono, quien e' ese?</button>
+					<button id="btnEs" class="btn centrado" data-dismiss="modal">Soy yo, sigamos!</button>
+				</div>
+			</div>
+		</div>
+
+	</div>
 
 	<!-- MODAL -->
 	<div class="modal fade" id="modalPreguntas" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="modalPreguntasLabel" aria-hidden="true">
@@ -95,7 +117,7 @@
 					</button>
 				</div>
 				<div class="modal-body centrado">
-					<h2 id="titleForm">Bienvenidx al simulador mágico de Cine a las Piñas</h2>
+					<h2 id="titleForm">¡Simulador mágico de Cine a las Piñas!<br></h2>
 					<p>Antes de empezar necesitamos pedirte unos datos para poder hacer que la magia funcione:</p>
 
 					<form id="formUser" class="needs-validation" autocomplete="off" novalidate>
@@ -162,7 +184,7 @@
 					</button>
 				</div>
 				<div class="modal-body centrado" >
-					<h2 >A ver a ver...</h2>
+					<h2>A ver a ver...</h2>
 					<div id="rta"></div>
 				</div>
 				<div class="modal-footer">
@@ -174,6 +196,7 @@
 	</div>
 
 
+	<script src="peliculas.js"></script>
 	<script src="script.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
