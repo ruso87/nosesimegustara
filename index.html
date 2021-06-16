@@ -18,61 +18,19 @@
 		<div class="columnaOchenta">
 			<h1 class="centrado">¿Me gustará esta peli?</h1>
 			<h4 style="padding-bottom: 30px;">Como no siempre sabemos si una peli nos va a gustar, en Cine a las Piñas te traemos nuestro simulador mágico que te anticipa si una peli te va a gustar o no.. pa que no se coma el chasco, vio?</h4>
-			<div id="grillaPelis" class="grilla centrado">
-<!-- 				<div class="linkPeli">
-					<a onclick="empezar('ep6')">
-						<img src="media/programas/05-pelea-550.jpg" alt="Capitulo 6 - El Club de la Pelea">
-						<h4>Capitulo 6 - El Club de la Pelea</h4>
-					</a>
-					<a onclick="empezar('ep6')" class="btn">¿ME GUSTARÁ?</i></a>
-				</div>
-				<div class="linkPeli">
-					<a onclick="empezar('ep5')">
-						<img src="media/programas/04-totoro-550.jpg" alt="Capitulo 5 - Mi Vecino Totoro">
-						<h4>Capitulo 5 - Mi Vecino Totoro</h4>
-					</a>
-					<a onclick="empezar('ep5')" class="btn">¿ME GUSTARÁ?</i></a>
-				</div>
-				<div class="linkPeli">
-					<a onclick="empezar('ep4')">
-						<img src="media/programas/03-matrix-550.jpg" alt="Capitulo 4 - La Trilogía Matrix">
-						<h4>Capitulo 4 - La Trilogía Matrix</h4>
-					</a>
-					<a onclick="empezar('ep4')" class="btn">¿ME GUSTARÁ?</i></a>
-				</div>
-				<div class="linkPeli">
-					<a onclick="empezar('ep3')">
-						<img src="media/programas/02-aura-550.jpg" alt="Capitulo 3 - El Aura">
-						<h4>Capitulo 3 - El Aura</h4>
-					</a>
-					<a onclick="empezar('ep3')" class="btn">¿ME GUSTARÁ?</i></a>
-				</div>
-				<div class="linkPeli">
-					<a onclick="empezar('ep2')">
-						<img src="media/programas/01-dama-y-vag-550.jpg" alt="Capitulo 2 - La Dama y el Vagabundo">
-						<h4>Capitulo 2 - La Dama y el Vagabundo</h4>
-					</a>
-					<a onclick="empezar('ep2')" class="btn">¿ME GUSTARÁ?</i></a>
-				</div>
-				<div class="linkPeli">
-					<a onclick="empezar('ep1')">
-						<img src="media/programas/00-sexto-550.jpg" alt="Capitulo 1 - Sexto Sentido">
-						<h4>Capitulo 1 - Sexto Sentido</h4>
-					</a>
-					<a onclick="empezar('ep1')" class="btn">¿ME GUSTARÁ?</i></a>
-				</div>				
- -->			</div>
+			<div id="grillaPelis" class="grilla centrado"></div>
 			<div class="centrado" style="margin-bottom: 2rem; margin-top: 4rem;">
 				<h4 style="margin-bottom: 1rem;">¿Querés saber qué puntajes les dimos a todas las películas?</h4>
 				<a id="verTodas" class="btn" style="cursor: pointer; width: 847px; max-width: 100%;">VER PUNTAJES DE TODAS LAS PELÍCULAS</a>
-				<div id="listaTodas" class="centrado d-none"></div>
+				<div id="listaTodas" class="centrado"></div>
 			</div>
 			<div class="centrado" style="padding: 1rem; margin-bottom: 2rem;">
 				<h4 style="margin-bottom: 1rem;">¡Organizá las películas por la característica que más valores!</h4>
-				<a onclick="ordenarPorMusica()" class="btn" style="cursor: pointer; width: 420px; max-width: 100%; margin: 2px 1px;">MÚSICA</a>
-				<a onclick="ordenarPorFoto()" class="btn" style="cursor: pointer; width: 420px; max-width: 100%; margin: 2px 1px;">FOTOGRAFÍA</a>
-				<a onclick="ordenarPorTrama()" class="btn" style="cursor: pointer; width: 420px; max-width: 100%; margin: 2px 1px;">TRAMA</a>
-				<a onclick="ordenarPorFx()" class="btn" style="cursor: pointer; width: 420px; max-width: 100%; margin: 2px 1px;">EFECTOS ESPECIALES</a>
+				<a class="btn btnOrden">MÚSICA</a>
+				<a class="btn btnOrden">FOTOGRAFÍA</a>
+				<a class="btn btnOrden">TRAMA</a>
+				<a class="btn btnOrden">EFECTOS ESPECIALES</a>
+				<div id="listaOrden" class="centrado"></div>
 			</div>
 
 		</div>
@@ -174,6 +132,41 @@
 	</div>
 
 	<!-- MODAL -->
+	<div class="modal fade" id="modalGenero" tabindex="-1" aria-labelledby="modalGeneroLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="modalGeneroCenteredScrollableTitle"></h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body centrado" >
+					<h2>Una preguntita..</h2>
+					<form id="formGenero" class="needs-validation" autocomplete="off" novalidate>
+						<div class="form-group">
+							<p id="preguntaGeneroSola"></p>
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" name="radioGeneroSolo" id="generoSoloSi" value="si" required>
+								<label class="form-check-label" for="generoSoloSi">Si</label>
+							</div>
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" name="radioGeneroSolo" id="generoSoloNo" value="no" required>
+								<label class="form-check-label" for="generoSoloNo">No</label>
+							</div>
+						</div>
+						<button type="button" class="btn btnCerrar" data-dismiss="modal">Cerrar</button>
+						<button type="submit" id="submitBtnSolo" class="btn btn-primary" disabled>¡Venga esa magia!</button>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button id="limpiarModalGenero" class="btn centrado" data-dismiss="modal">Cerrar</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- MODAL -->
 	<div class="modal fade" id="modalRespuesta" tabindex="-1" aria-labelledby="modalRespuestaLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
 			<div class="modal-content">
@@ -192,7 +185,6 @@
 				</div>
 			</div>
 		</div>
-
 	</div>
 
 

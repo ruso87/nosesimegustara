@@ -499,23 +499,43 @@ footer .footerInfo .redesList {
 
 
 /*LISTA*/
-#listaTodas {
+
+.btnOrden {
+  cursor: pointer;
+  width: 420px;
+  max-width: 100%;
+  margin: 2px 1px;
+}
+
+#listaTodas, #listaOrden {
   background: #1f033a;
   min-height: 30px;
   width: 847px;
   max-width: 100%;
   margin: auto;
+  padding-top: 5px;
   border: 1px solid #ffa500;
+  border-top: 0;
+  display: none;
 }
-#listaTodas h4 {
+#listaOrden {
+  margin-top: -2px;
+  width: 845px;
+}
+#listaTodas h4, #listaOrden h4 {
   margin-top: 15px;
   margin-bottom: 5px;
 }
-#listaTodas p {
+#listaTodas p, #listaOrden p {
   margin: 0 30px;
   border-bottom: 1px solid #ffa500;
   padding-bottom: 10px;
 }
+
+#listaTodas p:last-child, #listaOrden p:last-child {
+  border: 0;
+}
+
 
 /*MEDIA QUERIES - TABLET*/
 @media all and (min-width: 600px) {
