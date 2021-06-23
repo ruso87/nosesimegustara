@@ -13,8 +13,6 @@ class Pelicula {
     datosPeli() {
             let nomYGen = `La película \"${this.nombre}\" es una película de ${this.genero}.`;
             let valorizaciones = `Valoración del equipo de Cine a las Piñas: Musica: ${this.musica}, Fotografía: ${this.foto}, Trama: ${this.trama}, Efectos especiales: ${this.fx}`;
-            console.log(nomYGen);
-            console.log(valorizaciones);
             let listaTodas = document.getElementById("listaTodas");
             let PeliListTit = document.createElement("h4");
             PeliListTit.innerText = nomYGen;

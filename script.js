@@ -1,20 +1,19 @@
 // IMPRIMO TODAS LAS PELICULAS EN EL HTML
 for (const pelicula of peliculasTodas) {
-    let linkPeli = document.createElement("div");
-    linkPeli.innerHTML = `<a onclick="empezar('${pelicula.id}')">
-						<img src="${pelicula.imagen}" alt="Capítulo ${pelicula.progridama} - ${pelicula.nombre}">
-						<h4>Capítulo ${pelicula.id} - ${pelicula.nombre}</h4>
-				    	</a>
-				    	<a onclick="empezar('${pelicula.id}')" class="btn">¿ME GUSTARÁ?</i></a>`;
-    document.getElementById("grillaPelis").appendChild(linkPeli);
+    $("#grillaPelis").append(`<div>
+                                <a onclick="empezar('${pelicula.id}')">
+                                <img src="${pelicula.imagen}" alt="Capítulo ${pelicula.progridama} - ${pelicula.nombre}">
+                                <h4>Capítulo ${pelicula.id} - ${pelicula.nombre}</h4>
+                                </a>
+                                <a onclick="empezar('${pelicula.id}')" class="btn">¿ME GUSTARÁ?</i></a>
+                            </div>`);
 }
 
 // AGREGO EVENTO PARA VER: LISTADO DE PELICULAS
-let verPelisList = document.getElementById("verTodas")
-verPelisList.onclick = () => { verTodas();};
+$("#verTodas").click(verTodas);
 
 // LISTADO DE PELICULAS ORDENADAS
-var verOrdenPelis = document.getElementsByClassName("btnOrden")
+var verOrdenPelis = $(".btnOrden");
 verOrdenPelis[0].onclick = () => { ordenarLista('Música');}
 verOrdenPelis[1].onclick = () => { ordenarLista('Foto');}
 verOrdenPelis[2].onclick = () => { ordenarLista('Trama');}
@@ -23,19 +22,18 @@ verOrdenPelis[3].onclick = () => { ordenarLista('Fx');}
 
 // FUNCIÓN PARA VER LOS DATOS DE TODAS LAS PELICULAS
 function verTodas() {
-    var element = document.getElementById("listaTodas");
-    if(element.classList.contains("d-block")){
-        element.classList.remove("d-block");
+    if($("#listaTodas").hasClass("d-block")){
+        $("#listaTodas").removeClass("d-block");
     }else{
-        element.classList.add("d-block");
-        if(element.classList.contains("check")){
+        $("#listaTodas").addClass("d-block");
+        if($("#listaTodas").hasClass("check")){
             // no hacer nada
         }else{
             // crear el listado de pelis
             for (pelis of peliculasTodas) {
                 pelis.datosPeli();
             }
-        element.classList.add("check");
+            $("#listaTodas").addClass("check");
         }
     }
 }
@@ -68,18 +66,18 @@ function ordenarLista(orden) {
             break;
     }
 
-    var element = document.getElementById("listaOrden");
-    element.innerHTML = `<h4>El orden de las películas listadas, según la importancia de su ${orden} es:</h4> <p>${ordenElegido}</p>`
+    var listaOrden = document.getElementById("listaOrden");
+    listaOrden.innerHTML = `<h4>El orden de las películas listadas, según la importancia de su ${orden} es:</h4> <p>${ordenElegido}</p>`
 
-    if(btnOrden.classList.contains("check") && element.classList.contains("d-block")){
+    if(btnOrden.classList.contains("check") && listaOrden.classList.contains("d-block")){
         btnOrden.classList.remove("check");
-        element.classList.remove("d-block");
+        listaOrden.classList.remove("d-block");
     }else{
         for (btn of verOrdenPelis) {
             btn.classList.remove("check");
         }
         btnOrden.classList.add("check");
-        element.classList.add("d-block");
+        listaOrden.classList.add("d-block");
     }
 }
 
@@ -121,30 +119,28 @@ function empezar(episodio) {
             newGenero();
         }else {
 
-            document.getElementById("preguntaGeneroSola").innerHTML = `¿Te gustan las peliculas de <strong>${peli.genero}</strong>?`
+            $("#preguntaGeneroSola").html(`¿Te gustan las peliculas de <strong>${peli.genero}</strong>?`);
 
             $('#modalGenero').modal('show');
 
-            let radiosSolos = document.getElementsByName("radioGeneroSolo");
+            let radiosSolos = $('input[name="radioGeneroSolo"]');
             radiosSolos[0].onclick = () => { btnEnable();};
             radiosSolos[1].onclick = () => { btnEnable();};
             
             function btnEnable(){
-                    document.getElementById("submitBtnSolo").disabled = false;
+                document.getElementById("submitBtnSolo").disabled = false;
             };
     
-            const formGenero = document.getElementById("formGenero");
-            formGenero.addEventListener("submit", submitGenero);
+            $("#formGenero").submit(submitGenero);
 
             function submitGenero(e){
                 e.preventDefault();
 
-                let generoNew = document.querySelector('input[name="radioGeneroSolo"]:checked').value;
+                let generoNew = $('input[name="radioGeneroSolo"]:checked').val();
                 userSaved.genero = generoNew;
                 sessionStorage.setItem(peli.genero, userSaved.genero);
                 newGenero();
                 $('#modalGenero').modal('toggle');
-
             }
         }
 
@@ -184,8 +180,7 @@ function empezar(episodio) {
             let diferenciaFx = diferenciaEnCategoria(peli.fx, userSaved.fx)
             let respuestaProbabilidad = probabilidad();
 
-            let rta = document.getElementById("rta");
-            rta.innerHTML = `<p>${generoComparado}</p><p>${respuestaProbabilidad}</p>`
+            $("#rta").html(`<p>${generoComparado}</p><p>${respuestaProbabilidad}</p>`);
 
             $('#modalRespuesta').modal('show');
         }
@@ -208,28 +203,26 @@ function empezar(episodio) {
         }
 
         // CREO TITULO Y PREGUNTA EN EL FORMULARIO
-        document.getElementById("titleForm").innerHTML = `Ok! Veamos si<br><strong>${peli.nombre}</strong><br>te gustará!`
-        document.getElementById("preguntaGenero").innerHTML = `¿Te gustan las peliculas de <strong>${peli.genero}</strong>?`
+        $("#titleForm").html(`Ok! Veamos si<br><strong>${peli.nombre}</strong><br>te gustará!`);
+        $("#preguntaGenero").html(`¿Te gustan las peliculas de <strong>${peli.genero}</strong>?`);
 
         // VALIDO LOS CAMPOS CON EVENTOS PARA HABILITAR Y DESABILITAR EL SUBMIT con una función 
-        let inputNombre = document.getElementById("nombreUser");
-        inputNombre.onkeyup = () => { btnEnable();};
+        $("#nombreUser").on('keyup', btnEnable);
         // AGREGO UN EVENTO A LOS RADIOS
-        let radios = document.getElementsByName("radioGenero");
+        let radios = $('input[name="radioGenero"]');
         radios[0].onclick = () => { btnEnable();};
         radios[1].onclick = () => { btnEnable();};
         
         // agrego un if para que se valide que el nombre no esté vacío y que algún radio esté clickeado
         function btnEnable(){
-            if(inputNombre.value != "" && (radios[0].checked || radios[1].checked)){
+            if($("#nombreUser").val() != "" && (radios[0].checked || radios[1].checked)){
                 document.getElementById("submitBtn").disabled = false;
             }else{
                 document.getElementById("submitBtn").disabled = true;
             }
         };
 
-        const formUser = document.getElementById("formUser");
-        formUser.addEventListener("submit", submitUser);
+        $("#formUser").submit(submitUser);
 
         // FORM
         function submitUser(e){
@@ -237,12 +230,12 @@ function empezar(episodio) {
             e.preventDefault();
 
             // SE ACCEDE A LOS DATOS DEL USUARIO DEL FORM
-            const nombre = document.getElementById("nombreUser").value;
-            const generoUser = document.querySelector('input[name="radioGenero"]:checked').value;
-            const musicaUser = document.getElementById("datoMusica").value;
-            const fotoUser = document.getElementById("datoFotografia").value;
-            const tramaUser = document.getElementById("datoTrama").value;
-            const fxUser = document.getElementById("datoFx").value;
+            const nombre = $("#nombreUser").val();
+            const generoUser = $('input[name="radioGenero"]:checked').val();
+            const musicaUser = $("#datoMusica").val();
+            const fotoUser = $("#datoFotografia").val();
+            const tramaUser = $("#datoTrama").val();
+            const fxUser = $("#datoFx").val();
             const user1 = new User (nombre, generoUser, musicaUser, fotoUser, tramaUser, fxUser);
 
             // SE ALMACENAN LOS DATOS EN LOCAL STORAGE 
@@ -288,8 +281,7 @@ function empezar(episodio) {
             let respuestaProbabilidad = probabilidad(diferencia);
 
             // SE ARMA LA RESPUESTA EN EL MODAL 
-            let rta = document.getElementById("rta");
-            rta.innerHTML = `<p>${generoComparado}</p><p>${respuestaProbabilidad}</p>`
+            let rta = $("#rta").html(`<p>${generoComparado}</p><p>${respuestaProbabilidad}</p>`);
 
             // ME APOYO EN BOOTSTRAP PARA CERRAR UN MODAL y ABRIR EL OTRO
             $('#modalPreguntas').modal('toggle');
