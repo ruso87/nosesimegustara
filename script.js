@@ -22,19 +22,15 @@ verOrdenPelis[3].onclick = () => { ordenarLista('Fx');}
 
 // FUNCIÓN PARA VER LOS DATOS DE TODAS LAS PELICULAS
 function verTodas() {
-    if($("#listaTodas").hasClass("d-block")){
-        $("#listaTodas").removeClass("d-block");
+    if($("#listaTodas").hasClass("check")){
+        $("#listaTodas").slideToggle("slow");
     }else{
-        $("#listaTodas").addClass("d-block");
-        if($("#listaTodas").hasClass("check")){
-            // no hacer nada
-        }else{
-            // crear el listado de pelis
-            for (pelis of peliculasTodas) {
-                pelis.datosPeli();
-            }
-            $("#listaTodas").addClass("check");
+        // crear el listado de pelis
+        for (pelis of peliculasTodas) {
+            pelis.datosPeli();
         }
+        $("#listaTodas").addClass("check");
+        $("#listaTodas").slideToggle("slow");
     }
 }
 
@@ -291,4 +287,25 @@ function empezar(episodio) {
     }
 }
 
+$("#logo").mouseover(function() {
+    $("#logo").animate({opacity:0.1}, 100)
+    .delay(100)
+    .animate({opacity:1}, 100)
+    .delay(100)
+    .animate({opacity:0.1}, 100)
+    .delay(100)
+    .animate({opacity:1}, 100)
+    .delay(400)
+    .animate({opacity:0.1}, 100)
+    .delay(100)
+    .animate({opacity:1}, 100)
+    .delay(100)
+    .animate({opacity:0.1}, 100)
+    .delay(100)
+    .animate({opacity:1}, 100);
+});
 
+$(document).ready(function() {
+    $("#grillaPelis").fadeIn(1000);
+});
+    
