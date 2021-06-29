@@ -149,7 +149,7 @@ function empezar(episodio) {
                 }
                 return resultadoGenero
             }
-            let generoComparado = comparacionGenero(peli.nombre, peli.genero, userSaved.genero)
+            let generoComparado = comparacionGenero(peli.nombre, peli.genero, userSaved.genero);
 
 
             // calculo de diferencia de puntuación según categoría
@@ -165,32 +165,27 @@ function empezar(episodio) {
                 var diferencia = diferenciaMusica + diferenciaFoto + diferenciaTrama + diferenciaFx
                 var porcentajeDiferencia = diferencia * 100 / 20;
                 var probabilidadOk = 100 - porcentajeDiferencia;
-                probabilidadOk = `Según las preferencias indicadas, la probabilidad de que la película te guste es de: ${probabilidadOk}%`
+                probabilidadOk = `Según las preferencias indicadas, <br>la probabilidad de que te guste la peli es de: <h2>${probabilidadOk}%</h2>`
                 return probabilidadOk;
             }
             // dato IMDB
             function traerPuntaje() {
-                let puntajeImdb =
-                $.get(`https://api.themoviedb.org/3/movie/${peli.idImdb}?api_key=4f82603cf8a9342399a9cf76a8c55033"`).done(function(resultado, estado) {
+                $.get(`https://api.themoviedb.org/3/movie/${peli.idImdb}?api_key=4f82603cf8a9342399a9cf76a8c55033`).done(function(resultado, estado) {
                     if (estado == "success") {
-                        var imdb = resultado.vote_average;
+                        $("#rta").html(`<p>${generoComparado}</p><p>${respuestaProbabilidad}</p><p>Dato de color:<br>el puntaje que le da IMDb a la película es ${resultado.vote_average}</p>`);
                     } else {
-                        imdb = null;
+                        $("#rta").html(`<p>${generoComparado}</p><p>${respuestaProbabilidad}</p>`);
                     }
-                    return imdb;
                 });
-                console.log(puntajeImdb);
             }
-
+            
             // SE EJECUTAN LAS FUNCIONES
             let diferenciaMusica = diferenciaEnCategoria(peli.musica, userSaved.musica)
             let diferenciaFoto = diferenciaEnCategoria(peli.foto, userSaved.foto)
             let diferenciaTrama = diferenciaEnCategoria(peli.trama, userSaved.trama)
             let diferenciaFx = diferenciaEnCategoria(peli.fx, userSaved.fx)
             let respuestaProbabilidad = probabilidad();
-            let calificacion = traerPuntaje();
-
-            $("#rta").html(`<p>${generoComparado}</p><p>${respuestaProbabilidad}</p><p>${calificacion}</p>`);
+            traerPuntaje();
 
             $('#modalRespuesta').modal('show');
         }
@@ -277,21 +272,18 @@ function empezar(episodio) {
             function probabilidad(diferencia) {
                 var porcentajeDiferencia = diferencia * 100 / 20;
                 var probabilidadOk = 100 - porcentajeDiferencia;
-                probabilidadOk = `Según las preferencias indicadas, la probabilidad de que la película te guste es de: ${probabilidadOk}%`
+                probabilidadOk = `Según las preferencias indicadas, <br>la probabilidad de que te guste la peli es de: <h2>${probabilidadOk}%</h2>`
                 return probabilidadOk;
             }
             // dato IMDB
             function traerPuntaje() {
-                let puntajeImdb =
-                $.get(`https://api.themoviedb.org/3/movie/${peli.idImdb}?api_key=4f82603cf8a9342399a9cf76a8c55033"`).done(function(resultado, estado) {
+                $.get(`https://api.themoviedb.org/3/movie/${peli.idImdb}?api_key=4f82603cf8a9342399a9cf76a8c55033`).done(function(resultado, estado) {
                     if (estado == "success") {
-                        var imdb = resultado.vote_average;
+                        $("#rta").html(`<p>${generoComparado}</p><p>${respuestaProbabilidad}</p><p>Dato de color:<br>el puntaje que le da IMDb a la película es ${resultado.vote_average}</p>`);
                     } else {
-                        imdb = null;
+                        $("#rta").html(`<p>${generoComparado}</p><p>${respuestaProbabilidad}</p>`);
                     }
-                    return imdb;
                 });
-                console.log(puntajeImdb);
             }
 
             // SE EJECUTAN LAS FUNCIONES
@@ -302,10 +294,7 @@ function empezar(episodio) {
             let diferenciaFx = diferenciaEnCategoria(peli.fx, user1.fx)
             let diferencia = calcularDiferencia();
             let respuestaProbabilidad = probabilidad(diferencia);
-            let calificacion = traerPuntaje();
-
-            // SE ARMA LA RESPUESTA EN EL MODAL 
-            let rta = $("#rta").html(`<p>${generoComparado}</p><p>${respuestaProbabilidad}</p><p>${calificacion}</p>`);
+            traerPuntaje();
 
             // ME APOYO EN BOOTSTRAP PARA CERRAR UN MODAL y ABRIR EL OTRO
             $('#modalPreguntas').modal('toggle');
