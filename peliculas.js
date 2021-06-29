@@ -1,6 +1,6 @@
 // OBJETOS: crear Películas
 class Pelicula {
-    constructor (id, imagen, nombre, genero, musica, foto, trama, fx) {
+    constructor (id, imagen, nombre, genero, musica, foto, trama, fx, idImdb) {
         this.id = id,
         this.imagen = imagen,
         this.nombre = nombre,
@@ -8,7 +8,8 @@ class Pelicula {
         this.musica = musica,
         this.foto = foto,
         this.trama = trama,
-        this.fx = fx
+        this.fx = fx,
+        this.idImdb = idImdb
     }
     datosPeli() {
             let nomYGen = `La película \"${this.nombre}\" es una película de ${this.genero}.`;
@@ -24,12 +25,12 @@ class Pelicula {
 }
 
 // Estos datos estarán cargados en la paltaforma de antemano y son diferentes dependiendo de cada película
-const datosEp1 = new Pelicula ("01", "media/programas/00-sexto-550.jpg", "Sexto Sentido", "suspenso", 0, 2, 5, 1);
-const datosEp2 = new Pelicula ("02", "media/programas/01-dama-y-vag-550.jpg", "La dama y el Vagabundo", "animacion", 2, 4, 0, 5);
-const datosEp3 = new Pelicula ("03", "media/programas/02-aura-550.jpg", "El Aura", "suspenso", 5, 3, 5, 0);
-const datosEp4 = new Pelicula ("04", "media/programas/03-matrix-550.jpg", "La Trilogía Matrix", "accion", 1, 2, 5, 5);
-const datosEp5 = new Pelicula ("05", "media/programas/04-totoro-550.jpg", "Mi vecino Totoro", "animación japonesa", 3, 3, 5, 0);
-const datosEp6 = new Pelicula ("06", "media/programas/05-pelea-550.jpg", "El Club de la Pelea", "accion", 3, 4, 5, 2);
+const datosEp1 = new Pelicula ("01", "media/programas/00-sexto-550.jpg", "Sexto Sentido", "suspenso", 0, 2, 5, 1, "tt0167404");
+const datosEp2 = new Pelicula ("02", "media/programas/01-dama-y-vag-550.jpg", "La dama y el Vagabundo", "animacion", 2, 4, 0, 5, "tt8096832");
+const datosEp3 = new Pelicula ("03", "media/programas/02-aura-550.jpg", "El Aura", "suspenso", 5, 3, 5, 0, "tt0420509");
+const datosEp4 = new Pelicula ("04", "media/programas/03-matrix-550.jpg", "La Trilogía Matrix", "accion", 1, 2, 5, 5, "tt0133093");
+const datosEp5 = new Pelicula ("05", "media/programas/04-totoro-550.jpg", "Mi vecino Totoro", "animación japonesa", 3, 3, 5, 0, "tt0096283");
+const datosEp6 = new Pelicula ("06", "media/programas/05-pelea-550.jpg", "El Club de la Pelea", "accion", 3, 4, 5, 2, "tt0137523");
 
 // ARMO ARRAY DE PELÍCULAS
 const peliculasTodas = [];
