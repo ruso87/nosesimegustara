@@ -1,13 +1,24 @@
 // IMPRIMO TODAS LAS PELICULAS EN EL HTML
 for (const pelicula of peliculasTodas) {
-    $("#grillaPelis").append(`<div>
-                                <a onclick="empezar('${pelicula.id}')">
-                                <img src="${pelicula.imagen}" alt="Capítulo ${pelicula.progridama} - ${pelicula.nombre}">
-                                <h4>Capítulo ${pelicula.id} - ${pelicula.nombre}</h4>
-                                </a>
-                                <a onclick="empezar('${pelicula.id}')" class="btn">¿ME GUSTARÁ?</i></a>
-                            </div>`);
+    $("#grillaPelis").append(
+        `<div>
+            <a onclick="empezar('${pelicula.id}')">
+                <div class="linkData">
+                    <div class="divInfo">
+                        <p>Música: <span>${pelicula.musica}</span></p>
+                        <p>Fotografía: <span>${pelicula.foto}</span></p>
+                        <p>Trama: <span>${pelicula.trama}</span></p>
+                        <p>Fx: <span>${pelicula.fx}</span></p>
+                    </div>
+                    <img src="${pelicula.imagen}" alt="Capítulo ${pelicula.progridama} - ${pelicula.nombre}">
+                </div>
+                <h4>Capítulo ${pelicula.id} - ${pelicula.nombre}</h4>
+            </a>
+            <a onclick="empezar('${pelicula.id}')" class="btn">¿ME GUSTARÁ?</i></a>
+        </div>`
+    );
 }
+
 
 // AGREGO EVENTO PARA VER: LISTADO DE PELICULAS
 $("#verTodas").click(verTodas);
@@ -24,6 +35,11 @@ verOrdenPelis[3].onclick = () => { ordenarLista('Fx');}
 function verTodas() {
     if($("#listaTodas").hasClass("check")){
         $("#listaTodas").slideToggle("slow");
+        if($(".divInfo").hasClass("d-flex")){
+            $(".divInfo").removeClass("d-flex");
+        }else{
+            $(".divInfo").addClass("d-flex");
+        }
     }else{
         // crear el listado de pelis
         for (pelis of peliculasTodas) {
@@ -31,6 +47,7 @@ function verTodas() {
         }
         $("#listaTodas").addClass("check");
         $("#listaTodas").slideToggle("slow");
+        $(".divInfo").addClass("d-flex");
     }
 }
 
@@ -39,22 +56,22 @@ function ordenarLista(orden) {
     switch (orden) {
         case "Música":
             var ordenElegido = peliculasTodas.sort((a, b) => b.musica - a.musica);
-            ordenElegido = ordenElegido.map(el => el.nombre).join(", ");
+            ordenElegido = ordenElegido.map(el => el.nombre).join("</li><li>");
             var btnOrden = verOrdenPelis[0]
             break;
         case "Foto":
             var ordenElegido = peliculasTodas.sort((a, b) => b.foto - a.foto);
-            ordenElegido = ordenElegido.map(el => el.nombre).join(", ");
+            ordenElegido = ordenElegido.map(el => el.nombre).join("</li><li>");
             var btnOrden = verOrdenPelis[1]
             break;
         case "Trama":
             var ordenElegido = peliculasTodas.sort((a, b) => b.trama - a.trama);
-            ordenElegido = ordenElegido.map(el => el.nombre).join(", ");
+            ordenElegido = ordenElegido.map(el => el.nombre).join("</li><li>");
             var btnOrden = verOrdenPelis[2]
             break;
         case "Fx":
             var ordenElegido = peliculasTodas.sort((a, b) => b.fx - a.fx);
-            ordenElegido = ordenElegido.map(el => el.nombre).join(", ");
+            ordenElegido = ordenElegido.map(el => el.nombre).join("</li><li>");
             var btnOrden = verOrdenPelis[3]
             break;
         default:
@@ -62,59 +79,43 @@ function ordenarLista(orden) {
             break;
     }
 
-    var listaOrden = document.getElementById("listaOrden");
-    listaOrden.innerHTML = `<h4>El orden de las películas listadas, según la importancia de su ${orden} es:</h4> <p>${ordenElegido}</p>`
+    $("#listaOrden").html(`<h4>El orden de las películas listadas, según la importancia de su ${orden} es:</h4> <ol><li>${ordenElegido}</li></ol>`);
 
-    if(btnOrden.classList.contains("check") && listaOrden.classList.contains("d-block")){
-        btnOrden.classList.remove("check");
-        listaOrden.classList.remove("d-block");
+    if($(btnOrden).hasClass("check") && $("#listaOrden").hasClass("listaAbierta")){
+        $(btnOrden).remove("check");
+        $("#listaOrden").slideToggle("slow");
+        $("#listaOrden").removeClass("listaAbierta");
+    }else if($("#listaOrden").hasClass("listaAbierta")){
+        for (btn of verOrdenPelis) {
+            btn.classList.remove("check");
+        }
+        $(btnOrden).addClass("check");
     }else{
         for (btn of verOrdenPelis) {
             btn.classList.remove("check");
         }
-        btnOrden.classList.add("check");
-        listaOrden.classList.add("d-block");
+        $(btnOrden).addClass("check");
+        $("#listaOrden").slideToggle("slow");
+        $("#listaOrden").addClass("listaAbierta");
     }
 }
 
-
 function empezar(episodio) {
-    // Selecciono qué objeto (Película) se usará para la comparación dependiendo del parámetro enviado en la function empezar() desde el HTML
-    switch (episodio) {
-        case "01":
-            var peli = datosEp1;
-            break;
-        case "02":
-            var peli = datosEp2;
-            break;
-        case "03":
-            var peli = datosEp3;
-            break;
-        case "04":
-            var peli = datosEp4;
-            break;
-        case "05":
-            var peli = datosEp5;
-            break;
-        case "06":
-            var peli = datosEp6;
-            break;
-        default:
-            console.log("Oh oh... algo salió mal. Por favor elegí otra película");
-            break;
-    }
-    
+    // Selecciono qué objeto (Película) se usará para la comparación
+    var peli = peliculasTodas.find(elemento => elemento.id === episodio);
+
+    // reviso si ya tengo datos guardados del Usuario
     if(sessionStorage.getItem('calpDatoUser') != null) {
-        var userSaved = sessionStorage.getItem('calpDatoUser')
-        userSaved = JSON.parse(userSaved);
 
-        var grabado = sessionStorage.getItem(peli.genero);
+        //si hay algo guardado, traigo el objeto del Usuario 
+        var userStored = sessionStorage.getItem('calpDatoUser')
+        userStored = JSON.parse(userStored);
         
-        if(grabado != null){
-            userSaved.genero = grabado;
-            newGenero();
-        }else {
-
+        // reviso si el genero ya fue comparado anteriormente buscando entre las propiedades y si ya existe hago la comparación de todos los datos, sino armo el pido saber por ese genero puntualmente y lo almaceno en el objeto del usuario como una nueva propiedad
+        if(`${peli.genero}` in userStored){
+            let valorStored = userStored[`${peli.genero}`];
+            newGenero(valorStored);
+        }else{
             $("#preguntaGeneroSola").html(`¿Te gustan las peliculas de <strong>${peli.genero}</strong>?`);
 
             $('#modalGenero').modal('show');
@@ -132,24 +133,31 @@ function empezar(episodio) {
             function submitGenero(e){
                 e.preventDefault();
 
-                let generoNew = $('input[name="radioGeneroSolo"]:checked').val();
-                userSaved.genero = generoNew;
-                sessionStorage.setItem(peli.genero, userSaved.genero);
-                newGenero();
+                let valorNew = $('input[name="radioGeneroSolo"]:checked').val();
+                userStored[`${peli.genero}`] = valorNew;
+                sessionStorage.setItem('calpDatoUser', JSON.stringify(userStored));
+
+                newGenero(valorNew);
+
+                //reseteo los campos del Form
+                $('input[name="radioGeneroSolo"]')[0].checked = false;
+                $('input[name="radioGeneroSolo"]')[1].checked = false;
+                document.getElementById("submitBtnSolo").disabled = true;
+
                 $('#modalGenero').modal('toggle');
             }
         }
 
-        function newGenero(){
+        function newGenero(respGenero){
             // comprobación de si al usuario le gusta el género de la Película
             function comparacionGenero(nombrePeli, genero, respUser) {
-                var resultadoGenero = `${userSaved.nombre}, probablemente ${nombrePeli} no te guste <br> porque es de ${genero}.`;
+                var resultadoGenero = `${userStored.nombre}, probablemente ${nombrePeli} no te guste <br> porque es de ${genero}.`;
                 if (respUser == "si"){
-                    resultadoGenero = `${userSaved.nombre}, en un principio venimos bien!<br> ${nombrePeli} es una película de ${genero}.`;
+                    resultadoGenero = `${userStored.nombre}, en un principio venimos bien!<br> ${nombrePeli} es una película de ${genero}.`;
                 }
                 return resultadoGenero
             }
-            let generoComparado = comparacionGenero(peli.nombre, peli.genero, userSaved.genero);
+            let generoComparado = comparacionGenero(peli.nombre, peli.genero, respGenero);
 
 
             // calculo de diferencia de puntuación según categoría
@@ -163,7 +171,7 @@ function empezar(episodio) {
             // calculo de la probabilidad de que le guste la película según la diferencia de gustos
             function probabilidad() {
                 var diferencia = diferenciaMusica + diferenciaFoto + diferenciaTrama + diferenciaFx
-                var porcentajeDiferencia = diferencia * 100 / 20;
+                var porcentajeDiferencia = diferencia * 100 / 40;
                 var probabilidadOk = 100 - porcentajeDiferencia;
                 probabilidadOk = `Según las preferencias indicadas, <br>la probabilidad de que te guste la peli es de: <h2>${probabilidadOk}%</h2>`
                 return probabilidadOk;
@@ -180,10 +188,10 @@ function empezar(episodio) {
             }
             
             // SE EJECUTAN LAS FUNCIONES
-            let diferenciaMusica = diferenciaEnCategoria(peli.musica, userSaved.musica)
-            let diferenciaFoto = diferenciaEnCategoria(peli.foto, userSaved.foto)
-            let diferenciaTrama = diferenciaEnCategoria(peli.trama, userSaved.trama)
-            let diferenciaFx = diferenciaEnCategoria(peli.fx, userSaved.fx)
+            let diferenciaMusica = diferenciaEnCategoria(peli.musica, userStored.musica)
+            let diferenciaFoto = diferenciaEnCategoria(peli.foto, userStored.foto)
+            let diferenciaTrama = diferenciaEnCategoria(peli.trama, userStored.trama)
+            let diferenciaFx = diferenciaEnCategoria(peli.fx, userStored.fx)
             let respuestaProbabilidad = probabilidad();
             traerPuntaje();
 
@@ -194,25 +202,13 @@ function empezar(episodio) {
 
         $('#modalPreguntas').modal('toggle');
 
-
-        // OBJETO: crear User
-        class User {
-            constructor (nombre, genero, musica, foto, trama, fx) {
-                this.nombre = nombre,
-                this.genero = genero.toLowerCase(),
-                this.musica = musica,
-                this.foto = foto,
-                this.trama = trama,
-                this.fx = fx
-            }
-        }
-
         // CREO TITULO Y PREGUNTA EN EL FORMULARIO
         $("#titleForm").html(`Ok! Veamos si<br><strong>${peli.nombre}</strong><br>te gustará!`);
         $("#preguntaGenero").html(`¿Te gustan las peliculas de <strong>${peli.genero}</strong>?`);
 
         // VALIDO LOS CAMPOS CON EVENTOS PARA HABILITAR Y DESABILITAR EL SUBMIT con una función 
         $("#nombreUser").on('keyup', btnEnable);
+
         // AGREGO UN EVENTO A LOS RADIOS
         let radios = $('input[name="radioGenero"]');
         radios[0].onclick = () => { btnEnable();};
@@ -234,6 +230,16 @@ function empezar(episodio) {
             // SE IMPIDE EL ENVÍO DE FORM
             e.preventDefault();
 
+            // OBJETO: crear User
+            class User {
+                constructor (nombre, musica, foto, trama, fx) {
+                    this.nombre = nombre,
+                    this.musica = musica,
+                    this.foto = foto,
+                    this.trama = trama,
+                    this.fx = fx
+                }
+            }
             // SE ACCEDE A LOS DATOS DEL USUARIO DEL FORM
             const nombre = $("#nombreUser").val();
             const generoUser = $('input[name="radioGenero"]:checked').val();
@@ -241,11 +247,13 @@ function empezar(episodio) {
             const fotoUser = $("#datoFotografia").val();
             const tramaUser = $("#datoTrama").val();
             const fxUser = $("#datoFx").val();
-            const user1 = new User (nombre, generoUser, musicaUser, fotoUser, tramaUser, fxUser);
+            const user1 = new User (nombre, musicaUser, fotoUser, tramaUser, fxUser);
+            user1[`${peli.genero}`] = generoUser;
 
             // SE ALMACENAN LOS DATOS EN LOCAL STORAGE 
             sessionStorage.setItem('calpDatoUser', JSON.stringify(user1));
-            sessionStorage.setItem(peli.genero, generoUser);
+            // habilito el botón para el reseteo de Datos
+            $("#limpiarDatos").show()
             
             // comprobación de si al usuario le gusta el género de la Película
             function comparacionGenero(nombrePeli, genero, respUser) {
@@ -270,7 +278,7 @@ function empezar(episodio) {
             }
             // calculo de la probabilidad de que le guste la película según la diferencia total
             function probabilidad(diferencia) {
-                var porcentajeDiferencia = diferencia * 100 / 20;
+                var porcentajeDiferencia = diferencia * 100 / 40;
                 var probabilidadOk = 100 - porcentajeDiferencia;
                 probabilidadOk = `Según las preferencias indicadas, <br>la probabilidad de que te guste la peli es de: <h2>${probabilidadOk}%</h2>`
                 return probabilidadOk;
@@ -287,7 +295,7 @@ function empezar(episodio) {
             }
 
             // SE EJECUTAN LAS FUNCIONES
-            let generoComparado = comparacionGenero(peli.nombre, peli.genero, user1.genero)
+            let generoComparado = comparacionGenero(peli.nombre, peli.genero, generoUser)
             let diferenciaMusica = diferenciaEnCategoria(peli.musica, user1.musica)
             let diferenciaFoto = diferenciaEnCategoria(peli.foto, user1.foto)
             let diferenciaTrama = diferenciaEnCategoria(peli.trama, user1.trama)
@@ -296,11 +304,14 @@ function empezar(episodio) {
             let respuestaProbabilidad = probabilidad(diferencia);
             traerPuntaje();
 
+            //reseteo los campos del Form
+            $("#nombreUser").val('');
+            $('input[name="radioGenero"]')[0].checked = false;
+            $('input[name="radioGenero"]')[1].checked = false;
             // ME APOYO EN BOOTSTRAP PARA CERRAR UN MODAL y ABRIR EL OTRO
             $('#modalPreguntas').modal('toggle');
             $('#modalRespuesta').modal('show');
         }
-    
     }
 }
 
@@ -326,3 +337,11 @@ $(document).ready(function() {
     $("#grillaPelis").fadeIn(1000);
 });
     
+// AGREGO EVENTO PARA VER: LISTADO DE PELICULAS
+$("#limpiarDatos").click(limpiarDatos);
+
+function limpiarDatos() {
+    sessionStorage.clear();
+    $('#modalDatosClear').modal('toggle');
+    $("#limpiarDatos").hide();
+};

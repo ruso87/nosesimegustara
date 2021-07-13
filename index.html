@@ -14,18 +14,21 @@
 			<a href="#" id="logo"><img src="media/logo.png" alt="Inicio - Podcast"></a>
 		</nav>
 	</header>
-	<section class="sectionMain backDark" style="min-height: calc(100vh - 239px);">
+	<section class="sectionMain backDark">
 		<div class="columnaOchenta">
 			<h1 class="centrado">¿Me gustará esta peli?</h1>
-			<h4 style="padding-bottom: 30px;">Como no siempre sabemos si una peli nos va a gustar, en Cine a las Piñas te traemos nuestro simulador mágico que te anticipa si una peli te va a gustar o no.. pa que no se coma el chasco, vio?</h4>
+			<h4>Como no siempre sabemos si una peli nos va a gustar, en Cine a las Piñas te traemos nuestro simulador mágico que te anticipa si una peli te va a gustar o no.. pa que no se coma el chasco, vio?</h4>
 			<div id="grillaPelis" class="grilla centrado" style="display: none;"></div>
-			<div class="centrado" style="margin-bottom: 2rem; margin-top: 4rem;">
-				<h4 style="margin-bottom: 1rem;">¿Querés saber qué puntajes les dimos a todas las películas?</h4>
-				<a id="verTodas" class="btn" style="cursor: pointer; width: 847px; max-width: 100%;">VER PUNTAJES DE TODAS LAS PELÍCULAS</a>
+			<div class="centrado btnFull">
+				<a id="limpiarDatos" class="btn" style="display: none;">LIMPIAR MIS DATOS PARA EMPEZAR DE NUEVO</a>
+			</div>
+			<div class="centrado btnFull">
+				<h4>¿Querés saber qué puntajes les dimos a todas las películas?</h4>
+				<a id="verTodas" class="btn">VER PUNTAJES DE TODAS LAS PELÍCULAS</a>
 				<div id="listaTodas" class="centrado"></div>
 			</div>
-			<div class="centrado" style="padding: 1rem; margin-bottom: 2rem;">
-				<h4 style="margin-bottom: 1rem;">¡Organizá las películas por la característica que más valores!</h4>
+			<div class="centrado btnCuatro">
+				<h4>¡Organizá las películas por la característica que más valores!</h4>
 				<a class="btn btnOrden">MÚSICA</a>
 				<a class="btn btnOrden">FOTOGRAFÍA</a>
 				<a class="btn btnOrden">TRAMA</a>
@@ -42,35 +45,12 @@
 	</footer>
 
 	<!-- MODAL -->
-	<div class="modal fade" id="modalLocal" tabindex="-1" aria-labelledby="modalLocal" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="modalLocalCenteredScrollableTitle"></h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">×</span>
-					</button>
-				</div>
-				<div class="modal-body centrado" >
-					<h2>Buenas buenaas..</h2>
-					<div id="preSaludo"></div>
-				</div>
-				<div class="modal-footer" style="justify-content: center;">
-					<button id="btnNoEs" class="btn centrado" data-dismiss="modal">Nono, ni idea quien e'</button>
-					<button id="btnEs" class="btn centrado" data-dismiss="modal">Soy yo, sigamos!</button>
-				</div>
-			</div>
-		</div>
-
-	</div>
-
-	<!-- MODAL -->
 	<div class="modal fade" id="modalPreguntas" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="modalPreguntasLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title" id="modalPreguntasCenteredScrollableTitle"></h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<button type="button" class="close btnCerrar" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">×</span>
 					</button>
 				</div>
@@ -98,25 +78,25 @@
 						<div class="form-group">
 							<label for="datoMusica">Música:</label>
 							<div class="col-12">
-								<input type="range" class="custom-range" min="0" max="5" id="datoMusica" required>
+								<input type="range" class="custom-range" min="0" max="10" id="datoMusica" required>
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="datoFotografia">Fotografía:</label>
 							<div class="col-12">
-								<input type="range" class="custom-range" min="0" max="5" id="datoFotografia" required>
+								<input type="range" class="custom-range" min="0" max="10" id="datoFotografia" required>
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="datoTrama">Trama:</label>
 							<div class="col-12">
-								<input type="range" class="custom-range" min="0" max="5" id="datoTrama" required>
+								<input type="range" class="custom-range" min="0" max="10" id="datoTrama" required>
 							</div>
 						</div>
 						<div class="form-group">
 							<label for="datoFx">Efectos Especiales:</label>
 							<div class="col-12">
-								<input type="range" class="custom-range" min="0" max="5" id="datoFx" required>
+								<input type="range" class="custom-range" min="0" max="10" id="datoFx" required>
 							</div>
 						</div>
 						<button type="button" class="btn btnCerrar" data-dismiss="modal">Cerrar</button>
@@ -137,7 +117,7 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title" id="modalGeneroCenteredScrollableTitle"></h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<button type="button" class="close btnCerrar" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">×</span>
 					</button>
 				</div>
@@ -172,13 +152,33 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title" id="modalRespuestaCenteredScrollableTitle"></h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<button type="button" class="close btnCerrar" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">×</span>
 					</button>
 				</div>
 				<div class="modal-body centrado" >
 					<h2>A ver a ver...</h2>
 					<div id="rta"></div>
+				</div>
+				<div class="modal-footer">
+					<button id="limpiarModal" class="btn centrado" data-dismiss="modal">Cerrar</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- MODAL -->
+	<div class="modal fade" id="modalDatosClear" tabindex="-1" aria-labelledby="modalDatosClearLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="modalDatosClearCenteredScrollableTitle"></h5>
+					<button type="button" class="close btnCerrar" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body centrado" >
+					<h2>¡Hecho!</h2>
+					<p>¿Quién eras vos? ;)<br>Hacé click en alguna película para empezar nuevamente.</p>
 				</div>
 				<div class="modal-footer">
 					<button id="limpiarModal" class="btn centrado" data-dismiss="modal">Cerrar</button>
