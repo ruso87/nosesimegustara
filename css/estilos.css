@@ -53,6 +53,14 @@ h2 {
   color: #ffa500;
 }
 
+h2 span {
+  display: block;
+  font-size: 17px;
+}
+#rta p strong {
+  color: #1f033a;
+}
+
 h3 {
   color: #1f033a;
   font-weight: 700;
@@ -91,6 +99,16 @@ a:hover {
 
 a:focus {
   box-shadow: none !important;
+}
+
+#comoFunciona {
+  text-decoration: none;
+  color: #ffa500;
+  cursor: pointer;
+}
+#comoFunciona:hover {
+  text-decoration: none;
+  color: #ffef00;
 }
 
 .columnaOchenta {

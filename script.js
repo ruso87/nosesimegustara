@@ -19,7 +19,6 @@ for (const pelicula of peliculasTodas) {
     );
 }
 
-
 // AGREGO EVENTO PARA VER: LISTADO DE PELICULAS
 $("#verTodas").click(verTodas);
 
@@ -100,6 +99,44 @@ function ordenarLista(orden) {
     }
 }
 
+$(document).ready(function() {
+    $("#grillaPelis").fadeIn(1000);
+
+    // reviso si ya tengo datos guardados del Usuario y si es así, muestro el botón para poder borrar los Datos y empezar de nuevo
+    if(sessionStorage.getItem('calpDatoUser') != null) {
+        $("#limpiarDatos").show();
+    }
+
+    if (sessionStorage.getItem('reloadAfterPageLoad')) {
+        sessionStorage.removeItem('reloadAfterPageLoad');
+        $('#modalDatosClear').modal('toggle');
+        $("#limpiarDatos").hide();
+    }
+
+});
+
+//evento para limpiar datos del usuario
+$("#limpiarDatos").click( function () {
+    sessionStorage.clear();
+    sessionStorage.reloadAfterPageLoad = true;
+    window.scrollTo(0, 0);
+    window.location.reload();
+} 
+);
+
+// AGREGO EVENTO PARA VER: LISTADO DE PELICULAS
+$("#limpiarDatos").click(limpiarDatos);
+
+
+
+// AGREGO EVENTO PARA VER: LISTADO DE PELICULAS
+$("#comoFunciona").click(modalComo)
+
+function modalComo() {
+    $('#modalComoFunciona').modal('toggle');
+};
+
+
 function empezar(episodio) {
     // Selecciono qué objeto (Película) se usará para la comparación
     var peli = peliculasTodas.find(elemento => elemento.id === episodio);
@@ -121,25 +158,25 @@ function empezar(episodio) {
             $('#modalGenero').modal('show');
 
             let radiosSolos = $('input[name="radioGeneroSolo"]');
-            radiosSolos[0].onclick = () => { btnEnable();};
-            radiosSolos[1].onclick = () => { btnEnable();};
-            
-            function btnEnable(){
+            radiosSolos[0].onclick = () => { radioClicked("si")};
+            radiosSolos[1].onclick = () => { radioClicked("no")};
+           
+            function radioClicked(valor) {
                 document.getElementById("submitBtnSolo").disabled = false;
-            };
-    
+                userStored[`${peli.genero}`] = valor;
+            }
+            
             $("#formGenero").submit(submitGenero);
 
             function submitGenero(e){
                 e.preventDefault();
 
                 let valorNew = $('input[name="radioGeneroSolo"]:checked').val();
-                userStored[`${peli.genero}`] = valorNew;
                 sessionStorage.setItem('calpDatoUser', JSON.stringify(userStored));
-
+                
                 newGenero(valorNew);
 
-                //reseteo los campos del Form
+                //reseteo los campos del Form para a próxima comparación
                 $('input[name="radioGeneroSolo"]')[0].checked = false;
                 $('input[name="radioGeneroSolo"]')[1].checked = false;
                 document.getElementById("submitBtnSolo").disabled = true;
@@ -149,16 +186,6 @@ function empezar(episodio) {
         }
 
         function newGenero(respGenero){
-            // comprobación de si al usuario le gusta el género de la Película
-            function comparacionGenero(nombrePeli, genero, respUser) {
-                var resultadoGenero = `${userStored.nombre}, probablemente ${nombrePeli} no te guste <br> porque es de ${genero}.`;
-                if (respUser == "si"){
-                    resultadoGenero = `${userStored.nombre}, en un principio venimos bien!<br> ${nombrePeli} es una película de ${genero}.`;
-                }
-                return resultadoGenero
-            }
-            let generoComparado = comparacionGenero(peli.nombre, peli.genero, respGenero);
-
 
             // calculo de diferencia de puntuación según categoría
             function diferenciaEnCategoria(valorPeli, valorUser) {
@@ -173,16 +200,74 @@ function empezar(episodio) {
                 var diferencia = diferenciaMusica + diferenciaFoto + diferenciaTrama + diferenciaFx
                 var porcentajeDiferencia = diferencia * 100 / 40;
                 var probabilidadOk = 100 - porcentajeDiferencia;
-                probabilidadOk = `Según las preferencias indicadas, <br>la probabilidad de que te guste la peli es de: <h2>${probabilidadOk}%</h2>`
                 return probabilidadOk;
             }
-            // dato IMDB
-            function traerPuntaje() {
+            // traigo dato IMDb e imprimo los resultados
+            function traerPuntaje(generoComparado, respUser, probabilidad) {
                 $.get(`https://api.themoviedb.org/3/movie/${peli.idImdb}?api_key=4f82603cf8a9342399a9cf76a8c55033`).done(function(resultado, estado) {
                     if (estado == "success") {
-                        $("#rta").html(`<p>${generoComparado}</p><p>${respuestaProbabilidad}</p><p>Dato de color:<br>el puntaje que le da IMDb a la película es ${resultado.vote_average}</p>`);
+            
+                        if (respUser == "si" && probabilidad <= 50){
+                            $("#rta").html(`<h2>${peli.nombre}<span>vs.</span>${userStored.nombre}</h2>
+                                            <p><strong>¡Está dificil!</strong></p>
+                                            <p>Por un lado, la película es de ${generoComparado},<br>por lo que puede que te guste.</p>
+                                            <p>Pero tengamos en cuenta que la probabilidad de eso es:</p>
+                                            <h2>${probabilidad}%</h2>
+                                            <p>Quizás se le puede dar una chance...<br>pero no prometo nada.</p>
+                                            <p><br>Dato de color:<br>el puntaje que le da IMDb a la película es ${resultado.vote_average}</p>`);
+                        } else if (respUser == "si" && probabilidad > 50){
+                            $("#rta").html(`<h2>${peli.nombre}<span>vs.</span>${userStored.nombre}</h2>
+                                            <p><strong>¡Puede ser buena!</strong></p>
+                                            <p>Además de que la película es de ${generoComparado},<br>la probabilidad de que te guste es:</p>
+                                            <h2>${probabilidad}%</h2>
+                                            <p>¡${peli.nombre} parece ser una película para vos!</p>
+                                            <p><br>Dato de color:<br>el puntaje que le da IMDb a la película es ${resultado.vote_average}</p>`);
+                        } else if (respUser == "no" && probabilidad <= 50){
+                            $("#rta").html(`<h2>${peli.nombre}<span>vs.</span>${userStored.nombre}</h2>
+                                            <p><strong>¡Olvídalo!</strong></p>
+                                            <p>Además de que la película es de ${generoComparado},<br>la probabilidad de que te guste es:</p>
+                                            <h2>${probabilidad}%</h2>
+                                            <p>NO verla puede ser una buena opción a veces..</p>
+                                            <p><br>Dato de color:<br>el puntaje que le da IMDb a la película es ${resultado.vote_average}</p>`);
+                        } else if (respUser == "no" && probabilidad > 50){
+                            $("#rta").html(`<h2>${peli.nombre}<span>vs.</span>${userStored.nombre}</h2>
+                                            <p><strong>¡Está dificil!</strong></p>
+                                            <p>Por un lado, la película es de ${generoComparado},<br>por lo que si esto es determinante, ni le demos una chance.</p>
+                                            <p>Por otro lado, coincide con tus gustos en:</p>
+                                            <h2>${probabilidad}%</h2>
+                                            <p>Vos sabrás si darle una chance o no.</p>
+                                            <p><br>Dato de color:<br>el puntaje que le da IMDb a la película es ${resultado.vote_average}</p>`);
+                        }
+            
                     } else {
-                        $("#rta").html(`<p>${generoComparado}</p><p>${respuestaProbabilidad}</p>`);
+            
+                        if (respUser == "si" && probabilidad <= 50){
+                            $("#rta").html(`<h2>${peli.nombre}<span>vs.</span>${userStored.nombre}</h2>
+                                            <p><strong>Está dificil!</strong></p>
+                                            <p>Por un lado, la película es de ${generoComparado},<br>por lo que puede que te guste.</p>
+                                            <p>Igual tengamos en cuenta que la probabilidad de eso es:</p>
+                                            <h2>${probabilidad}%</h2>
+                                            <p>Se le puede dar una chance...<br>pero no prometo nada.</p>`);
+                        } else if (respUser == "si" && probabilidad > 50){
+                            $("#rta").html(`<h2>${peli.nombre}<span>vs.</span>${userStored.nombre}</h2>
+                                            <p><strong>¡Puede ser buena!</strong></p>
+                                            <p>Además de que la película es de ${generoComparado},<br>la probabilidad de que te guste es:</p>
+                                            <h2>${probabilidad}%</h2>
+                                            <p>Claramente ${peli.nombre} es una película que puede gustarte!</p>`);
+                        } else if (respUser == "no" && probabilidad <= 50){
+                            $("#rta").html(`<h2>${peli.nombre}<span>vs.</span>${userStored.nombre}</h2>
+                                            <p><strong>¡Olvídalo!</strong></p>
+                                            <p>Además de que la película es de ${generoComparado},<br>la probabilidad de que te guste es:</p>
+                                            <h2>${probabilidad}%</h2>
+                                            <p>NO verla puede ser una buena opción.</p>`);
+                        } else if (respUser == "no" && probabilidad > 50){
+                            $("#rta").html(`<h2>${peli.nombre}<span>vs.</span>${userStored.nombre}</h2>
+                                            <p><strong>¡Está dificil!</strong></p>
+                                            <p>Por un lado, la película es de ${generoComparado},<br>por lo que si esto es determinante, ni le demos una chance.</p>
+                                            <p>Por otro lado, coincide con tus gustos en:</p>
+                                            <h2>${probabilidad}%</h2>
+                                            <p>Vos sabrás si darle una chance o no.</p>`);
+                        }
                     }
                 });
             }
@@ -193,7 +278,7 @@ function empezar(episodio) {
             let diferenciaTrama = diferenciaEnCategoria(peli.trama, userStored.trama)
             let diferenciaFx = diferenciaEnCategoria(peli.fx, userStored.fx)
             let respuestaProbabilidad = probabilidad();
-            traerPuntaje();
+            traerPuntaje(peli.genero, respGenero, respuestaProbabilidad);
 
             $('#modalRespuesta').modal('show');
         }
@@ -230,7 +315,7 @@ function empezar(episodio) {
             // SE IMPIDE EL ENVÍO DE FORM
             e.preventDefault();
 
-            // OBJETO: crear User
+            // OBJETO: crear Usuario
             class User {
                 constructor (nombre, musica, foto, trama, fx) {
                     this.nombre = nombre,
@@ -252,17 +337,10 @@ function empezar(episodio) {
 
             // SE ALMACENAN LOS DATOS EN LOCAL STORAGE 
             sessionStorage.setItem('calpDatoUser', JSON.stringify(user1));
+
             // habilito el botón para el reseteo de Datos
-            $("#limpiarDatos").show()
+            $("#limpiarDatos").show();
             
-            // comprobación de si al usuario le gusta el género de la Película
-            function comparacionGenero(nombrePeli, genero, respUser) {
-                var resultadoGenero = `${user1.nombre}, probablemente ${nombrePeli} no te guste <br> porque es de ${genero}.`;
-                if (respUser == "si"){
-                    resultadoGenero = `${user1.nombre}, en un principio venimos bien!<br> ${nombrePeli} es una película de ${genero}.`;
-                }
-                return resultadoGenero
-            }
             // calculo de diferencia de puntuación según categoría
             function diferenciaEnCategoria(valorPeli, valorUser) {
                 let resultado = valorPeli - valorUser;
@@ -280,29 +358,88 @@ function empezar(episodio) {
             function probabilidad(diferencia) {
                 var porcentajeDiferencia = diferencia * 100 / 40;
                 var probabilidadOk = 100 - porcentajeDiferencia;
-                probabilidadOk = `Según las preferencias indicadas, <br>la probabilidad de que te guste la peli es de: <h2>${probabilidadOk}%</h2>`
                 return probabilidadOk;
             }
             // dato IMDB
-            function traerPuntaje() {
+            function traerPuntaje(generoComparado, respUser, probabilidad) {
                 $.get(`https://api.themoviedb.org/3/movie/${peli.idImdb}?api_key=4f82603cf8a9342399a9cf76a8c55033`).done(function(resultado, estado) {
+
                     if (estado == "success") {
-                        $("#rta").html(`<p>${generoComparado}</p><p>${respuestaProbabilidad}</p><p>Dato de color:<br>el puntaje que le da IMDb a la película es ${resultado.vote_average}</p>`);
+            
+                        if (respUser == "si" && probabilidad <= 50){
+                            $("#rta").html(`<h2>${peli.nombre}<span>vs.</span>${user1.nombre}</h2>
+                                            <p><strong>¡Está dificil!</strong></p>
+                                            <p>Por un lado, la película es de ${generoComparado},<br>por lo que puede que te guste.</p>
+                                            <p>Pero tengamos en cuenta que la probabilidad de eso es:</p>
+                                            <h2>${probabilidad}%</h2>
+                                            <p>Quizás se le puede dar una chance...<br>pero no prometo nada.</p>
+                                            <p><br>Dato de color:<br>el puntaje que le da IMDb a la película es ${resultado.vote_average}</p>`);
+                        } else if (respUser == "si" && probabilidad > 50){
+                            $("#rta").html(`<h2>${peli.nombre}<span>vs.</span>${user1.nombre}</h2>
+                                            <p><strong>¡Puede ser buena!</strong></p>
+                                            <p>Además de que la película es de ${generoComparado},<br>la probabilidad de que te guste es:</p>
+                                            <h2>${probabilidad}%</h2>
+                                            <p>¡${peli.nombre} parece ser una película para vos!</p>
+                                            <p><br>Dato de color:<br>el puntaje que le da IMDb a la película es ${resultado.vote_average}</p>`);
+                        } else if (respUser == "no" && probabilidad <= 50){
+                            $("#rta").html(`<h2>${peli.nombre}<span>vs.</span>${user1.nombre}</h2>
+                                            <p><strong>¡Olvídalo!</strong></p>
+                                            <p>Además de que la película es de ${generoComparado},<br>la probabilidad de que te guste es:</p>
+                                            <h2>${probabilidad}%</h2>
+                                            <p>NO verla puede ser una buena opción a veces..</p>
+                                            <p><br>Dato de color:<br>el puntaje que le da IMDb a la película es ${resultado.vote_average}</p>`);
+                        } else if (respUser == "no" && probabilidad > 50){
+                            $("#rta").html(`<h2>${peli.nombre}<span>vs.</span>${user1.nombre}</h2>
+                                            <p><strong>¡Está dificil!</strong></p>
+                                            <p>Por un lado, la película es de ${generoComparado},<br>por lo que si esto es determinante, ni le demos una chance.</p>
+                                            <p>Por otro lado, coincide con tus gustos en:</p>
+                                            <h2>${probabilidad}%</h2>
+                                            <p>Vos sabrás si darle una chance o no.</p>
+                                            <p><br>Dato de color:<br>el puntaje que le da IMDb a la película es ${resultado.vote_average}</p>`);
+                        }
+            
                     } else {
-                        $("#rta").html(`<p>${generoComparado}</p><p>${respuestaProbabilidad}</p>`);
+            
+                        if (respUser == "si" && probabilidad <= 50){
+                            $("#rta").html(`<h2>${peli.nombre}<span>vs.</span>${user1.nombre}</h2>
+                                            <p><strong>Está dificil!</strong></p>
+                                            <p>Por un lado, la película es de ${generoComparado},<br>por lo que puede que te guste.</p>
+                                            <p>Igual tengamos en cuenta que la probabilidad de eso es:</p>
+                                            <h2>${probabilidad}%</h2>
+                                            <p>Se le puede dar una chance...<br>pero no prometo nada.</p>`);
+                        } else if (respUser == "si" && probabilidad > 50){
+                            $("#rta").html(`<h2>${peli.nombre}<span>vs.</span>${user1.nombre}</h2>
+                                            <p><strong>¡Puede ser buena!</strong></p>
+                                            <p>Además de que la película es de ${generoComparado},<br>la probabilidad de que te guste es:</p>
+                                            <h2>${probabilidad}%</h2>
+                                            <p>Claramente ${peli.nombre} es una película que puede gustarte!</p>`);
+                        } else if (respUser == "no" && probabilidad <= 50){
+                            $("#rta").html(`<h2>${peli.nombre}<span>vs.</span>${user1.nombre}</h2>
+                                            <p><strong>¡Olvídalo!</strong></p>
+                                            <p>Además de que la película es de ${generoComparado},<br>la probabilidad de que te guste es:</p>
+                                            <h2>${probabilidad}%</h2>
+                                            <p>NO verla puede ser una buena opción.</p>`);
+                        } else if (respUser == "no" && probabilidad > 50){
+                            $("#rta").html(`<h2>${peli.nombre}<span>vs.</span>${user1.nombre}</h2>
+                                            <p><strong>¡Está dificil!</strong></p>
+                                            <p>Por un lado, la película es de ${generoComparado},<br>por lo que si esto es determinante, ni le demos una chance.</p>
+                                            <p>Por otro lado, coincide con tus gustos en:</p>
+                                            <h2>${probabilidad}%</h2>
+                                            <p>Vos sabrás si darle una chance o no.</p>`);
+                        }
                     }
+
                 });
             }
 
             // SE EJECUTAN LAS FUNCIONES
-            let generoComparado = comparacionGenero(peli.nombre, peli.genero, generoUser)
             let diferenciaMusica = diferenciaEnCategoria(peli.musica, user1.musica)
             let diferenciaFoto = diferenciaEnCategoria(peli.foto, user1.foto)
             let diferenciaTrama = diferenciaEnCategoria(peli.trama, user1.trama)
             let diferenciaFx = diferenciaEnCategoria(peli.fx, user1.fx)
             let diferencia = calcularDiferencia();
             let respuestaProbabilidad = probabilidad(diferencia);
-            traerPuntaje();
+            traerPuntaje(peli.genero, generoUser, respuestaProbabilidad);
 
             //reseteo los campos del Form
             $("#nombreUser").val('');
@@ -333,15 +470,5 @@ $("#logo").mouseover(function() {
     .animate({opacity:1}, 100);
 });
 
-$(document).ready(function() {
-    $("#grillaPelis").fadeIn(1000);
-});
-    
-// AGREGO EVENTO PARA VER: LISTADO DE PELICULAS
-$("#limpiarDatos").click(limpiarDatos);
 
-function limpiarDatos() {
-    sessionStorage.clear();
-    $('#modalDatosClear').modal('toggle');
-    $("#limpiarDatos").hide();
-};
+

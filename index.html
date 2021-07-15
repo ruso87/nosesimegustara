@@ -17,7 +17,8 @@
 	<section class="sectionMain backDark">
 		<div class="columnaOchenta">
 			<h1 class="centrado">¿Me gustará esta peli?</h1>
-			<h4>Como no siempre sabemos si una peli nos va a gustar, en Cine a las Piñas te traemos nuestro simulador mágico que te anticipa si una peli te va a gustar o no.. pa que no se coma el chasco, vio?</h4>
+			<h4>Como no siempre sabemos si una peli nos va a gustar, en <em>Cine a las Piñas</em> presentamos nuestro simulador mágico que anticipa si una peli te va a gustar o no.</h4>
+			<h4>¿Querés saber cómo funciona? Es magia, eso no se pregunta!... Pero bueh, igual te lo contamos acá: <a id="comoFunciona">¿Cómo funciona?</a></h4>
 			<div id="grillaPelis" class="grilla centrado" style="display: none;"></div>
 			<div class="centrado btnFull">
 				<a id="limpiarDatos" class="btn" style="display: none;">LIMPIAR MIS DATOS PARA EMPEZAR DE NUEVO</a>
@@ -102,9 +103,6 @@
 						<button type="button" class="btn btnCerrar" data-dismiss="modal">Cerrar</button>
 						<button type="submit" id="submitBtn" class="btn btn-primary" disabled>¡Venga esa magia!</button>
 					</form>
-					
-				</div>
-				<div class="modal-footer">
 				</div>
 			</div>
 		</div>
@@ -135,12 +133,9 @@
 								<label class="form-check-label" for="generoSoloNo">No</label>
 							</div>
 						</div>
-						<button type="button" class="btn btnCerrar" data-dismiss="modal">Cerrar</button>
+						<button type="button" id="limpiarModalGenero" class="btn btnCerrar" data-dismiss="modal">Cerrar</button>
 						<button type="submit" id="submitBtnSolo" class="btn btn-primary" disabled>¡Venga esa magia!</button>
 					</form>
-				</div>
-				<div class="modal-footer">
-					<button id="limpiarModalGenero" class="btn centrado" data-dismiss="modal">Cerrar</button>
 				</div>
 			</div>
 		</div>
@@ -157,7 +152,6 @@
 					</button>
 				</div>
 				<div class="modal-body centrado" >
-					<h2>A ver a ver...</h2>
 					<div id="rta"></div>
 				</div>
 				<div class="modal-footer">
@@ -179,6 +173,31 @@
 				<div class="modal-body centrado" >
 					<h2>¡Hecho!</h2>
 					<p>¿Quién eras vos? ;)<br>Hacé click en alguna película para empezar nuevamente.</p>
+				</div>
+				<div class="modal-footer">
+					<button id="limpiarModal" class="btn centrado" data-dismiss="modal">Cerrar</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- MODAL -->
+	<div class="modal fade" id="modalComoFunciona" tabindex="-1" aria-labelledby="modalComoFuncionaLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="modalComoFuncionaCenteredScrollableTitle"></h5>
+					<button type="button" class="close btnCerrar" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body centrado" >
+					<h2>¿Cómo funciona?</h2>
+					<p>1. Desde Cine a las Piñas, ya valoramos las películas en diferentes categorías:<br> música, fotografía, trama y efectos especiales.</p>
+					<p>2. Te vamos a pedir que nos digas cuan importantes son estos elementos para vos y si te gustan determinados generos.</p>
+					<p>3. Teniendo en cuenta todos estos datos, nuestra inteligencia artificial <em>EscalpNet</em> analizará todos los datos con algoritmos de última generación desarollados por la NASA con ayuda del Instituto Tecnológico de Massachusetts, Elon Mask y Tony Stark y te informaremos cual es la probabilidad de que te guste la película.</p>
+					<p>Como dato de color, te mostramos la valoración otrogada por <a href="https://www.imdb.com/" target="_blank" rel="noopener">IMDb.com</a> que son unos capos.</p>
+					<h2>¡Que lo disfrutes!</h2>
+					<p>Y gracias por apoyarnos :)</p>
 				</div>
 				<div class="modal-footer">
 					<button id="limpiarModal" class="btn centrado" data-dismiss="modal">Cerrar</button>
